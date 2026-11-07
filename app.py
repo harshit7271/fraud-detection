@@ -4,13 +4,11 @@ Combines the production FastAPI microservice, Executive Dashboard UI,
 and an interactive Gradio Biometric Lab on free CPU hardware.
 """
 
-import os
 from typing import Any
 
 import cv2
 import gradio as gr
 import numpy as np
-import uvicorn
 from PIL import Image
 
 from app.main import create_application
@@ -168,11 +166,8 @@ with gr.Blocks(title="FACEGUARD AI — Enterprise Biometric Proctoring") as demo
                 """
             )
 
-# Mount Gradio demo onto FastAPI app at /gradio
-app = gr.mount_gradio_app(app, demo, path="/gradio")
+# Integrate all FastAPI proctoring routes & static files into Gradio's internal FastAPI app
+demo.app.routes.extend(app.routes)
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 7860))
-    host = os.environ.get("HOST", "0.0.0.0")
-    print(f"Starting FaceGuard AI microservice on {host}:{port}...")
-    uvicorn.run(app, host=host, port=port)
+    demo.launch()
