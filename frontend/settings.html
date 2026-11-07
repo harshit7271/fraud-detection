@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Platform Settings — FACEGUARD AI</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body class="bg-slate-50 text-slate-800 min-h-screen">
+
+    <!-- Persistent Sidebar -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Main Content Container -->
+    <div class="ml-64 flex flex-col min-h-screen">
+        
+        <!-- Header Bar -->
+        <div id="headerContainer"></div>
+
+        <!-- Settings Work Area -->
+        <main class="flex-1 p-8 space-y-6 max-w-4xl">
+            
+            <div class="space-y-6">
+                
+                <!-- Card 1: Backend API Connectivity -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-base">🌐</span>
+                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Backend API Connectivity</h3>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono">FastAPI Endpoints</span>
+                    </div>
+
+                    <div class="space-y-3">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">API Base URL</label>
+                            <input id="settingApiUrl" type="text" placeholder="http://localhost:8000/api/v1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+                            <p class="text-[11px] text-slate-500 mt-1">Default points to current window origin (`/api/v1`).</p>
+                        </div>
+
+                        <div class="flex items-center justify-between pt-2">
+                            <button id="testConnectionBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-4 rounded-xl border border-slate-200 transition shadow-xs flex items-center gap-2">
+                                <span>⚡</span>
+                                <span>Test Backend Connection</span>
+                            </button>
+                            <span id="connectionTestResult" class="text-xs font-mono text-slate-500"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Frame Capture & Video Telemetry -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-base">📹</span>
+                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Camera & Frame Capture</h3>
+                        </div>
+                        <span class="text-[10px] text-slate-400 font-mono">Client-Side Sampling</span>
+                    </div>
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Preferred Camera Source</label>
+                            <select id="settingCameraSelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition cursor-pointer">
+                                <option value="">Detecting available devices...</option>
+                            </select>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Sampling Cadence (ms)</label>
+                                <input id="settingSampling" type="number" min="300" max="3000" step="100" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition">
+                                <p class="text-[11px] text-slate-500 mt-1">Recommended: 800ms for optimal balance of frame telemetry and network throughput.</p>
+                            </div>
+
+                            <div>
+                                <div class="flex justify-between items-center mb-1.5">
+                                    <label class="text-xs font-semibold text-slate-700">JPEG Compression Quality</label>
+                                    <span id="jpegQualityDisplay" class="text-xs font-mono text-indigo-600 font-bold">85%</span>
+                                </div>
+                                <input id="settingJpegQuality" type="range" min="50" max="95" step="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
+                                <p class="text-[11px] text-slate-500 mt-1">Higher quality increases facial landmark clarity; lower quality reduces bandwidth.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Security & Privacy Compliance Architecture -->
+                <div class="glass-card p-6 rounded-2xl space-y-3">
+                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono border-b border-slate-100 pb-3">Zero-Trust Security & Privacy Policy</h3>
+                    <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
+                        <p class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>No Biometric Storage in Browser:</strong> Raw webcam frames and biometric embedding representations are never stored in localStorage, cookies, or IndexedDB.</span>
+                        </p>
+                        <p class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>Server-Side Cryptography:</strong> Reference facial vectors are encrypted server-side with AES-256-GCM using isolated tenant keys and salted initialization vectors.</span>
+                        </p>
+                        <p class="flex items-start gap-2">
+                            <span class="text-emerald-600 font-bold">✓</span>
+                            <span><strong>Camera Stream Termination:</strong> MediaTracks are strictly released upon page unload or manual pause to prevent unintended background surveillance.</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Action Save / Reset Buttons -->
+                <div class="flex items-center justify-end gap-3 pt-2">
+                    <button id="resetSettingsBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2.5 px-4 rounded-xl border border-slate-200 transition shadow-xs">
+                        Reset to Defaults
+                    </button>
+                    <button id="saveSettingsBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 px-6 rounded-xl transition shadow-sm">
+                        Save Preferences
+                    </button>
+                </div>
+
+            </div>
+
+        </main>
+    </div>
+
+    <!-- ES6 Module Script -->
+    <script type="module" src="/static/js/settings.js"></script>
+</body>
+</html>
