@@ -9,9 +9,8 @@ from typing import Any
 import gradio as gr
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse, Response
-from starlette.middleware.base import BaseHTTPMiddleware
-from starlette.requests import Request
+from fastapi.responses import JSONResponse
+from starlette.middleware import Middleware
 
 from app.api.v1.endpoints.health import health_check, readiness_check
 from app.api.v1.endpoints.metrics import prometheus_metrics
@@ -80,34 +79,49 @@ api_app.include_router(api_v1_router)
 
 
 # Pure API ASGI Proxy Middleware: intercepts all API/health/docs requests before Gradio
-class PureApiProxyMiddleware(BaseHTTPMiddleware):
-    async def dispatch(self, request: Request, call_next: Any) -> Response:
-        path = request.url.path
-        if (
-            path.startswith("/api/")
-            or path.startswith("/docs")
-            or path.startswith("/redoc")
-            or path.startswith("/openapi.json")
-            or path in ["/", "/healthz", "/readyz", "/metrics"]
-        ):
-            scope = request.scope
-            receive = request.receive
-            status_code = 200
-            headers: list[tuple[bytes, bytes]] = []
-            body: list[bytes] = []
+class PureApiAsgiMiddleware:
+    """Zero-overhead ASGI proxy routing API requests directly to the FastAPI microservice."""
 
-            async def custom_send(message: dict[str, Any]) -> None:
-                nonlocal status_code, headers, body
-                if message["type"] == "http.response.start":
-                    status_code = message["status"]
-                    headers = message.get("headers", [])
-                elif message["type"] == "http.response.body":
-                    body.append(message.get("body", b""))
+    def __init__(self, app: Any) -> None:
+        self.app = app
 
-            await api_app(scope, receive, custom_send)
-            h_dict = {k.decode("latin-1"): v.decode("latin-1") for k, v in headers}
-            return Response(content=b"".join(body), status_code=status_code, headers=h_dict)
-        return await call_next(request)
+    async def __call__(self, scope: dict[str, Any], receive: Any, send: Any) -> None:
+        if scope["type"] == "http":
+            path = scope.get("path", "")
+            clean_path = path.rstrip("/") or "/"
+
+            # Pass internal Gradio worker routes if any
+            if path.startswith("/_gradio") or path.startswith("/gradio_api"):
+                await self.app(scope, receive, send)
+                return
+
+            # Pure backend microservice endpoints: root, health, docs, metrics, and API routes
+            if (
+                clean_path == "/"
+                or clean_path.startswith("/api")
+                or clean_path.startswith("/docs")
+                or clean_path.startswith("/redoc")
+                or clean_path.startswith("/openapi.json")
+                or clean_path in ["/healthz", "/readyz", "/metrics"]
+            ):
+                await api_app(scope, receive, send)
+                return
+
+        await self.app(scope, receive, send)
+
+
+# Monkeypatch Gradio App.create_app so that any runner (CLI, Python, Uvicorn) injects PureApiAsgiMiddleware
+_orig_create_app = gr.routes.App.create_app
+
+
+def _custom_create_app(blocks: Any, app: Any = None, app_kwargs: Any = None, *args: Any, **kwargs: Any) -> Any:
+    ak = dict(app_kwargs or {})
+    existing_mw = list(ak.get("middleware") or [])
+    ak["middleware"] = [Middleware(PureApiAsgiMiddleware)] + existing_mw
+    return _orig_create_app(blocks, app, ak, *args, **kwargs)
+
+
+gr.routes.App.create_app = staticmethod(_custom_create_app)
 
 
 # ZeroGPU hardware compatibility hook
@@ -124,8 +138,8 @@ except Exception:
 with gr.Blocks(title="FaceGuard AI Backend API") as demo:
     pass
 
-# Attach ASGI proxy middleware to Gradio's application instance
-demo.app.add_middleware(PureApiProxyMiddleware)
+# Attach ASGI proxy middleware to default Gradio instance
+demo.app.add_middleware(PureApiAsgiMiddleware)
 
 if __name__ == "__main__":
-    demo.launch()
+    demo.launch(app_kwargs={"middleware": [Middleware(PureApiAsgiMiddleware)]})
