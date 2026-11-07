@@ -110,15 +110,26 @@ class PureApiAsgiMiddleware:
         await self.app(scope, receive, send)
 
 
-# Monkeypatch Gradio App.create_app so that any runner (CLI, Python, Uvicorn) injects PureApiAsgiMiddleware
+# Monkeypatch Gradio App.create_app so that any runner (CLI, Python, Uvicorn, ZeroGPU) injects PureApiAsgiMiddleware
 _orig_create_app = gr.routes.App.create_app
 
 
-def _custom_create_app(blocks: Any, app: Any = None, app_kwargs: Any = None, *args: Any, **kwargs: Any) -> Any:
-    ak = dict(app_kwargs or {})
-    existing_mw = list(ak.get("middleware") or [])
-    ak["middleware"] = [Middleware(PureApiAsgiMiddleware)] + existing_mw
-    return _orig_create_app(blocks, app, ak, *args, **kwargs)
+def _custom_create_app(blocks: Any, *args: Any, **kwargs: Any) -> Any:
+    if "app_kwargs" in kwargs:
+        ak = dict(kwargs["app_kwargs"] or {})
+        existing_mw = list(ak.get("middleware") or [])
+        ak["middleware"] = [Middleware(PureApiAsgiMiddleware)] + existing_mw
+        kwargs["app_kwargs"] = ak
+    elif len(args) >= 2:
+        args_list = list(args)
+        ak = dict(args_list[1] or {})
+        existing_mw = list(ak.get("middleware") or [])
+        ak["middleware"] = [Middleware(PureApiAsgiMiddleware)] + existing_mw
+        args_list[1] = ak
+        args = tuple(args_list)
+    else:
+        kwargs["app_kwargs"] = {"middleware": [Middleware(PureApiAsgiMiddleware)]}
+    return _orig_create_app(blocks, *args, **kwargs)
 
 
 gr.routes.App.create_app = staticmethod(_custom_create_app)
