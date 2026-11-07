@@ -1,9 +1,10 @@
 ---
-title: FaceGuard AI - Proctoring Fraud Detection
-emoji: 🛡️
-colorFrom: indigo
-colorTo: slate
+title: "FaceGuard AI - Proctoring Fraud Detection"
+emoji: "🛡️"
+colorFrom: "indigo"
+colorTo: "gray"
 sdk: gradio
+sdk_version: "5.20.0"
 app_file: app.py
 pinned: false
 ---
