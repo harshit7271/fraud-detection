@@ -24,7 +24,20 @@ detector = FaceDetector()
 quality_assessor = QualityAssessor()
 liveness_detector = HybridLivenessDetector()
 
+# Hugging Face ZeroGPU compatibility wrapper
+try:
+    import spaces  # type: ignore[import-untyped]
+    gpu_decorator = spaces.GPU
+except Exception:
+    def gpu_decorator(fn=None, **kwargs):  # type: ignore[no-redef]
+        if fn is not None:
+            return fn
+        def dec(f):
+            return f
+        return dec
 
+
+@gpu_decorator
 def analyze_biometric_image(input_image: np.ndarray[Any, Any] | None) -> tuple[Image.Image | None, dict[str, Any]]:
     """Analyzes a candidate selfie or webcam frame using YuNet, SFace, and Anti-spoof PAD."""
     if input_image is None:
