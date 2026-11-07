@@ -1,0 +1,59 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "outputDirectory": "frontend",
+  "cleanUrls": true,
+  "rewrites": [
+    {
+      "source": "/",
+      "destination": "/frontend/index.html"
+    },
+    {
+      "source": "/register",
+      "destination": "/frontend/pages/register.html"
+    },
+    {
+      "source": "/monitor",
+      "destination": "/frontend/pages/monitor.html"
+    },
+    {
+      "source": "/history",
+      "destination": "/frontend/pages/history.html"
+    },
+    {
+      "source": "/session-details",
+      "destination": "/frontend/pages/session-details.html"
+    },
+    {
+      "source": "/settings",
+      "destination": "/frontend/pages/settings.html"
+    },
+    {
+      "source": "/static/:path*",
+      "destination": "/frontend/:path*"
+    },
+    {
+      "source": "/css/:path*",
+      "destination": "/frontend/css/:path*"
+    },
+    {
+      "source": "/js/:path*",
+      "destination": "/frontend/js/:path*"
+    },
+    {
+      "source": "/assets/:path*",
+      "destination": "/frontend/assets/:path*"
+    },
+    {
+      "source": "/pages/:path*",
+      "destination": "/frontend/pages/:path*"
+    },
+    {
+      "source": "/api/v1/:path*",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/api/v1/:path*"
+    },
+    {
+      "source": "/healthz",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/healthz"
+    }
+  ]
+}
