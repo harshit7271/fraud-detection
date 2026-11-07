@@ -1,0 +1,28 @@
+{
+  "dataset_summary": {
+    "genuine_pairs": 1000,
+    "impostor_pairs": 1000
+  },
+  "eer_point": {
+    "recommended_balanced_threshold": 0.3576,
+    "equal_error_rate": 0.0,
+    "accuracy": 0.9995
+  },
+  "enterprise_recommendations": {
+    "strict_policy_alorica": {
+      "match_threshold": 0.42,
+      "uncertain_threshold": 0.3576,
+      "target": "FAR <= 0.1% (High Security)"
+    },
+    "balanced_policy_sagility": {
+      "match_threshold": 0.36,
+      "uncertain_threshold": 0.47,
+      "target": "Balanced EER"
+    },
+    "lenient_policy_mastek": {
+      "match_threshold": 0.38,
+      "uncertain_threshold": 0.25,
+      "target": "Low Friction / Low FRR"
+    }
+  }
+}

@@ -1,0 +1,34 @@
+# Version Control & Local Caches
+.git
+.gitignore
+.venv
+venv
+env
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov
+
+# Environment and secrets
+.env
+
+# Performance testing output
+.locust
+locustfile.py
+
+# Transient data
+data/test_sessions_store.json
+data/*.db
+data/*.sqlite
+data/*.sqlite3
+data/*.db-journal
+
+# Documentation and temporary demo outputs
+demo_output/
+*.tmp
+*.log
