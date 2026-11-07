@@ -1,3 +1,15 @@
+---
+title: "FaceGuard AI - Proctoring Fraud Detection"
+emoji: "🛡️"
+colorFrom: "indigo"
+colorTo: "gray"
+sdk: gradio
+sdk_version: "5.20.0"
+python_version: "3.12"
+app_file: app.py
+pinned: false
+---
+
 # FACEGUARD AI — Enterprise Face Fraud Detection Platform
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
