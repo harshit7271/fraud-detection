@@ -13,6 +13,26 @@
       "destination": "https://harshit7271-faceguard-ai.hf.space/healthz"
     },
     {
+      "source": "/readyz",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/readyz"
+    },
+    {
+      "source": "/metrics",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/metrics"
+    },
+    {
+      "source": "/docs",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/docs"
+    },
+    {
+      "source": "/redoc",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/redoc"
+    },
+    {
+      "source": "/openapi.json",
+      "destination": "https://harshit7271-faceguard-ai.hf.space/openapi.json"
+    },
+    {
       "source": "/register",
       "destination": "/register.html"
     },

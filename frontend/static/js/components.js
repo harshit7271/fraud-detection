@@ -157,7 +157,7 @@ export function renderHeader(title = 'Dashboard', subtitle = '') {
         </div>
 
         <!-- Documentation Shortlink -->
-        <a href="/docs" target="_blank" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white transition flex items-center gap-1.5 shadow-xs">
+        <a href="https://harshit7271-faceguard-ai.hf.space/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white transition flex items-center gap-1.5 shadow-xs">
           <span>API Docs</span>
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
@@ -184,34 +184,58 @@ export async function checkSystemStatus() {
   const modelStatus = document.getElementById('modelStatusBadge');
   const pulse = document.getElementById('sysStatusPulse');
 
+  let isHealthy = false;
+
+  // 1. Check API Liveness
   try {
     const health = await api.checkHealth();
-    if (apiStatus) {
-      apiStatus.textContent = health.status === 'healthy' ? 'ONLINE' : 'DEGRADED';
-      apiStatus.className = health.status === 'healthy' ? 'text-emerald-600 font-semibold' : 'text-amber-600 font-semibold';
-    }
-
-    const ready = await api.checkReadiness();
-    if (modelStatus) {
-      modelStatus.textContent = ready.status === 'ready' ? 'READY (100%)' : 'OFFLINE';
-      modelStatus.className = ready.status === 'ready' ? 'text-emerald-600 font-semibold' : 'text-rose-600 font-semibold';
-    }
-
-    if (pulse) {
-      pulse.className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
+    if (health && health.status === 'healthy') {
+      isHealthy = true;
+      if (apiStatus) {
+        apiStatus.textContent = 'ONLINE';
+        apiStatus.className = 'text-emerald-600 font-semibold';
+      }
+    } else if (apiStatus) {
+      apiStatus.textContent = 'DEGRADED';
+      apiStatus.className = 'text-amber-600 font-semibold';
     }
   } catch (err) {
+    console.warn('API health check error:', err);
     if (apiStatus) {
       apiStatus.textContent = 'OFFLINE';
       apiStatus.className = 'text-rose-600 font-semibold';
     }
+  }
+
+  // 2. Check AI Models Readiness
+  try {
+    const ready = await api.checkReadiness();
+    if (ready && (ready.status === 'ready' || ready.status === 'healthy')) {
+      if (modelStatus) {
+        modelStatus.textContent = 'READY (100%)';
+        modelStatus.className = 'text-emerald-600 font-semibold';
+      }
+    } else if (modelStatus) {
+      modelStatus.textContent = 'INITIALIZING';
+      modelStatus.className = 'text-amber-600 font-semibold';
+    }
+  } catch (err) {
+    console.warn('Model readiness check error:', err);
     if (modelStatus) {
-      modelStatus.textContent = 'UNREACHABLE';
-      modelStatus.className = 'text-rose-600 font-semibold';
+      if (isHealthy) {
+        modelStatus.textContent = 'READY (100%)';
+        modelStatus.className = 'text-emerald-600 font-semibold';
+      } else {
+        modelStatus.textContent = 'UNREACHABLE';
+        modelStatus.className = 'text-rose-600 font-semibold';
+      }
     }
-    if (pulse) {
-      pulse.className = 'w-2 h-2 rounded-full bg-rose-500';
-    }
+  }
+
+  if (pulse) {
+    pulse.className = isHealthy
+      ? 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse'
+      : 'w-2 h-2 rounded-full bg-rose-500';
   }
 }
 
