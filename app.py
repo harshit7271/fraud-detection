@@ -74,6 +74,16 @@ api_app.add_api_route("/metrics", prometheus_metrics, methods=["GET"], tags=["Ob
 # Include core fraud detection and session proctoring API router
 api_app.include_router(api_v1_router)
 
+# ZeroGPU hardware compatibility hook
+try:
+    import spaces  # type: ignore[import-untyped]
+
+    @spaces.GPU
+    def _zero_gpu_worker() -> None:
+        pass
+except Exception:
+    pass
+
 # Gradio container runner compatibility for Hugging Face Spaces free tier
 with gr.Blocks(title="FaceGuard AI Backend API") as demo:
     pass
