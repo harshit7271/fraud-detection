@@ -12,6 +12,7 @@ os.environ["GRADIO_SSR_MODE"] = "False"
 from typing import Any
 
 import gradio as gr
+import gradio.networking as net
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
@@ -23,6 +24,9 @@ from app.api.v1.router import api_v1_router
 from app.core.config import get_settings
 from app.middleware.error_handler import register_exception_handlers
 from app.middleware.logging import StructuredLoggingMiddleware
+
+# Bypass localhost probing check inside container environments
+net.url_ok = lambda url: True
 
 # Initialize production configuration
 settings = get_settings()
@@ -51,8 +55,8 @@ api_app.add_middleware(
 register_exception_handlers(api_app)
 
 
-# Root JSON endpoint for pure backend microservice
-@api_app.get("/", response_class=JSONResponse, tags=["Service"])
+# Root JSON endpoint for pure backend microservice (supports both GET and HEAD for HF healthchecks)
+@api_app.api_route("/", methods=["GET", "HEAD"], response_class=JSONResponse, tags=["Service"])
 def service_root() -> JSONResponse:
     """Returns microservice health, version, and operational endpoint directory."""
     return JSONResponse(
@@ -75,8 +79,8 @@ def service_root() -> JSONResponse:
 
 
 # Operational health and observability routes
-api_app.add_api_route("/healthz", health_check, methods=["GET"], tags=["Health"])
-api_app.add_api_route("/readyz", readiness_check, methods=["GET"], tags=["Health"])
+api_app.add_api_route("/healthz", health_check, methods=["GET", "HEAD"], tags=["Health"])
+api_app.add_api_route("/readyz", readiness_check, methods=["GET", "HEAD"], tags=["Health"])
 api_app.add_api_route("/metrics", prometheus_metrics, methods=["GET"], tags=["Observability"])
 
 # Include core fraud detection and session proctoring API router
@@ -130,12 +134,13 @@ def _custom_create_app(blocks: Any, *args: Any, **kwargs: Any) -> Any:
 
 gr.routes.App.create_app = staticmethod(_custom_create_app)
 
-# Monkeypatch Blocks.launch to force ssr_mode=False
+# Monkeypatch Blocks.launch to force ssr_mode=False and _frontend=False
 _orig_launch = gr.Blocks.launch
 
 
 def _custom_launch(self: Any, *args: Any, **kwargs: Any) -> Any:
     kwargs["ssr_mode"] = False
+    kwargs["_frontend"] = False
     return _orig_launch(self, *args, **kwargs)
 
 
@@ -160,4 +165,8 @@ with gr.Blocks(title="FaceGuard AI Backend API") as demo:
 demo.app.add_middleware(PureApiAsgiMiddleware)
 
 if __name__ == "__main__":
-    demo.launch(ssr_mode=False, app_kwargs={"middleware": [Middleware(PureApiAsgiMiddleware)]})
+    demo.launch(
+        ssr_mode=False,
+        _frontend=False,
+        app_kwargs={"middleware": [Middleware(PureApiAsgiMiddleware)]},
+    )
