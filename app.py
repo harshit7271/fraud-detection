@@ -84,7 +84,7 @@ api_app.add_api_route("/readyz", readiness_check, methods=["GET", "HEAD"], tags=
 api_app.add_api_route("/metrics", prometheus_metrics, methods=["GET"], tags=["Observability"])
 
 # Include core fraud detection and session proctoring API router
-api_app.include_router(api_v1_router)
+api_app.include_router(api_v1_router, prefix=settings.API_V1_PREFIX)
 
 
 # Pure API ASGI Proxy Middleware: intercepts all HTTP traffic before Gradio
