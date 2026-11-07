@@ -4,10 +4,14 @@ Pure FastAPI REST API Backend running on Hugging Face Spaces free tier.
 Zero UI / Zero Gradio Frontend — Dedicated backend engine for Vercel/Web clients.
 """
 
+from typing import Any
+
 import gradio as gr
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, Response
+from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.requests import Request
 
 from app.api.v1.endpoints.health import health_check, readiness_check
 from app.api.v1.endpoints.metrics import prometheus_metrics
@@ -74,6 +78,38 @@ api_app.add_api_route("/metrics", prometheus_metrics, methods=["GET"], tags=["Ob
 # Include core fraud detection and session proctoring API router
 api_app.include_router(api_v1_router)
 
+
+# Pure API ASGI Proxy Middleware: intercepts all API/health/docs requests before Gradio
+class PureApiProxyMiddleware(BaseHTTPMiddleware):
+    async def dispatch(self, request: Request, call_next: Any) -> Response:
+        path = request.url.path
+        if (
+            path.startswith("/api/")
+            or path.startswith("/docs")
+            or path.startswith("/redoc")
+            or path.startswith("/openapi.json")
+            or path in ["/", "/healthz", "/readyz", "/metrics"]
+        ):
+            scope = request.scope
+            receive = request.receive
+            status_code = 200
+            headers: list[tuple[bytes, bytes]] = []
+            body: list[bytes] = []
+
+            async def custom_send(message: dict[str, Any]) -> None:
+                nonlocal status_code, headers, body
+                if message["type"] == "http.response.start":
+                    status_code = message["status"]
+                    headers = message.get("headers", [])
+                elif message["type"] == "http.response.body":
+                    body.append(message.get("body", b""))
+
+            await api_app(scope, receive, custom_send)
+            h_dict = {k.decode("latin-1"): v.decode("latin-1") for k, v in headers}
+            return Response(content=b"".join(body), status_code=status_code, headers=h_dict)
+        return await call_next(request)
+
+
 # ZeroGPU hardware compatibility hook
 try:
     import spaces  # type: ignore[import-untyped]
@@ -88,8 +124,8 @@ except Exception:
 with gr.Blocks(title="FaceGuard AI Backend API") as demo:
     pass
 
-# Prepend our pure FastAPI routes so they resolve FIRST before Gradio catch-all
-demo.app.router.routes = api_app.router.routes + demo.app.router.routes
+# Attach ASGI proxy middleware to Gradio's application instance
+demo.app.add_middleware(PureApiProxyMiddleware)
 
 if __name__ == "__main__":
     demo.launch()
