@@ -4,6 +4,11 @@ Pure FastAPI REST API Backend running on Hugging Face Spaces free tier.
 Zero UI / Zero Gradio Frontend — Dedicated backend engine for Vercel/Web clients.
 """
 
+import os
+
+# Disable Gradio SvelteKit SSR Node proxy completely
+os.environ["GRADIO_SSR_MODE"] = "False"
+
 from typing import Any
 
 import gradio as gr
@@ -78,7 +83,7 @@ api_app.add_api_route("/metrics", prometheus_metrics, methods=["GET"], tags=["Ob
 api_app.include_router(api_v1_router)
 
 
-# Pure API ASGI Proxy Middleware: intercepts all API/health/docs requests before Gradio
+# Pure API ASGI Proxy Middleware: intercepts all HTTP traffic before Gradio
 class PureApiAsgiMiddleware:
     """Zero-overhead ASGI proxy routing API requests directly to the FastAPI microservice."""
 
@@ -88,24 +93,15 @@ class PureApiAsgiMiddleware:
     async def __call__(self, scope: dict[str, Any], receive: Any, send: Any) -> None:
         if scope["type"] == "http":
             path = scope.get("path", "")
-            clean_path = path.rstrip("/") or "/"
 
             # Pass internal Gradio worker routes if any
             if path.startswith("/_gradio") or path.startswith("/gradio_api"):
                 await self.app(scope, receive, send)
                 return
 
-            # Pure backend microservice endpoints: root, health, docs, metrics, and API routes
-            if (
-                clean_path == "/"
-                or clean_path.startswith("/api")
-                or clean_path.startswith("/docs")
-                or clean_path.startswith("/redoc")
-                or clean_path.startswith("/openapi.json")
-                or clean_path in ["/healthz", "/readyz", "/metrics"]
-            ):
-                await api_app(scope, receive, send)
-                return
+            # All external traffic is routed exclusively to the pure FastAPI microservice
+            await api_app(scope, receive, send)
+            return
 
         await self.app(scope, receive, send)
 
@@ -134,6 +130,17 @@ def _custom_create_app(blocks: Any, *args: Any, **kwargs: Any) -> Any:
 
 gr.routes.App.create_app = staticmethod(_custom_create_app)
 
+# Monkeypatch Blocks.launch to force ssr_mode=False
+_orig_launch = gr.Blocks.launch
+
+
+def _custom_launch(self: Any, *args: Any, **kwargs: Any) -> Any:
+    kwargs["ssr_mode"] = False
+    return _orig_launch(self, *args, **kwargs)
+
+
+gr.Blocks.launch = _custom_launch
+
 
 # ZeroGPU hardware compatibility hook
 try:
@@ -153,4 +160,4 @@ with gr.Blocks(title="FaceGuard AI Backend API") as demo:
 demo.app.add_middleware(PureApiAsgiMiddleware)
 
 if __name__ == "__main__":
-    demo.launch(app_kwargs={"middleware": [Middleware(PureApiAsgiMiddleware)]})
+    demo.launch(ssr_mode=False, app_kwargs={"middleware": [Middleware(PureApiAsgiMiddleware)]})
