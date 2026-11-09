@@ -28,8 +28,8 @@ from tests.unit.test_detector import create_synthetic_face
 
 client = TestClient(app)
 
-ALORICA_AUTH = {"X-Tenant-Key": "alorica-live-key-2026"}
-SAGILITY_AUTH = {"X-Tenant-Key": "sagility-live-key-2026"}
+ENTERPRISE_A_AUTH = {"X-Tenant-Key": "enterprise-a-key-2026"}
+ENTERPRISE_B_AUTH = {"X-Tenant-Key": "enterprise-b-key-2026"}
 
 
 def to_base64(img: np.ndarray) -> str:
@@ -68,7 +68,7 @@ def run_api_demo() -> None:
 
     res_reg = client.post(
         "/api/v1/fraud/sessions",
-        headers=ALORICA_AUTH,
+        headers=ENTERPRISE_A_AUTH,
         data=reg_payload,
         files=reg_files,
     )
@@ -93,7 +93,7 @@ def run_api_demo() -> None:
     }
     res_b1 = client.post(
         f"/api/v1/fraud/sessions/{session_id}/analyze",
-        headers=ALORICA_AUTH,
+        headers=ENTERPRISE_A_AUTH,
         json=batch_1,
     )
     print(f"  • POST .../analyze -> HTTP {res_b1.status_code}")
@@ -120,7 +120,7 @@ def run_api_demo() -> None:
     }
     res_b2 = client.post(
         f"/api/v1/fraud/sessions/{session_id}/analyze",
-        headers=ALORICA_AUTH,
+        headers=ENTERPRISE_A_AUTH,
         json=batch_absence,
     )
     b2_data = res_b2.json()
@@ -154,7 +154,7 @@ def run_api_demo() -> None:
     }
     res_b3 = client.post(
         f"/api/v1/fraud/sessions/{session_id}/analyze",
-        headers=ALORICA_AUTH,
+        headers=ENTERPRISE_A_AUTH,
         json=batch_multi,
     )
     b3_data = res_b3.json()
@@ -170,7 +170,7 @@ def run_api_demo() -> None:
     print("\n[Step 6] Consolidated Fraud Audit Report (GET /api/v1/fraud/sessions/{id}/report)")
     res_rep = client.get(
         f"/api/v1/fraud/sessions/{session_id}/report",
-        headers=ALORICA_AUTH,
+        headers=ENTERPRISE_A_AUTH,
     )
     print(f"  • GET .../report -> HTTP {res_rep.status_code}")
     rep_data = res_rep.json()
@@ -184,10 +184,10 @@ def run_api_demo() -> None:
 
     # 7. Multi-Tenant Isolation Verification
     print("\n[Step 7] Multi-Tenant Boundary Isolation Security Test")
-    print("  • Attempting cross-tenant access: Sagility tenant trying to access Alorica session...")
+    print("  • Attempting cross-tenant access: Enterprise B tenant trying to access Enterprise A session...")
     cross_res = client.get(
         f"/api/v1/fraud/sessions/{session_id}",
-        headers=SAGILITY_AUTH,
+        headers=ENTERPRISE_B_AUTH,
     )
     print(f"  • Result HTTP Status: {cross_res.status_code} (Blocked / Segregated)")
     print(f"  • Response:           {cross_res.json()}")

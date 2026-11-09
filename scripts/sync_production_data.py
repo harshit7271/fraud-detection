@@ -30,9 +30,9 @@ from app.db.models.tenant import Tenant, TenantConfig
 
 PROD_API_URL = "https://harshit7271-faceguard-ai.hf.space/api/v1"
 TENANTS = [
-    {"slug": "alorica", "name": "Alorica Global", "key": "alorica-live-key-2026"},
-    {"slug": "sagility", "name": "Sagility Health", "key": "sagility-live-key-2026"},
-    {"slug": "mastek", "name": "Mastek Enterprise", "key": "mastek-live-key-2026"},
+    {"slug": "enterprise-a", "name": "Enterprise A", "key": "enterprise-a-key-2026"},
+    {"slug": "enterprise-b", "name": "Enterprise B", "key": "enterprise-b-key-2026"},
+    {"slug": "enterprise-c", "name": "Enterprise C", "key": "enterprise-c-key-2026"},
 ]
 
 

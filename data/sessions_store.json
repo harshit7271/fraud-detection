@@ -1,7 +1,7 @@
 {
   "13ebbe6e-bdf6-4148-ace4-21f826b97cb5": {
     "session_id": "13ebbe6e-bdf6-4148-ace4-21f826b97cb5",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_492198",
     "interview_id": "int_eval_7812",
     "consent_recorded": true,
@@ -164,7 +164,7 @@
   },
   "18319f65-0520-4e61-a674-fc4390ff7c6e": {
     "session_id": "18319f65-0520-4e61-a674-fc4390ff7c6e",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_381042",
     "interview_id": "int_eval_6541",
     "consent_recorded": true,
@@ -327,7 +327,7 @@
       {
         "event_id": "433fe5ad-dd63-40b2-b9b0-794e54a06580",
         "session_id": "18319f65-0520-4e61-a674-fc4390ff7c6e",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "FACE_ABSENT",
         "timestamp_ms": 1794065509213,
         "duration_ms": 3500,
@@ -342,7 +342,7 @@
   },
   "f9211702-fed9-49ff-b2c0-4acc102fc473": {
     "session_id": "f9211702-fed9-49ff-b2c0-4acc102fc473",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_817290",
     "interview_id": "int_eval_9103",
     "consent_recorded": true,
@@ -505,7 +505,7 @@
       {
         "event_id": "369e7762-2904-4aba-b936-a8b3f140c2bf",
         "session_id": "f9211702-fed9-49ff-b2c0-4acc102fc473",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794065089213,
         "duration_ms": 4200,
@@ -519,7 +519,7 @@
       {
         "event_id": "e3a2cffa-699c-4dc7-81cb-cf7d2b0817bb",
         "session_id": "f9211702-fed9-49ff-b2c0-4acc102fc473",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794065209213,
         "duration_ms": 3000,
@@ -534,7 +534,7 @@
   },
   "40ee370f-8625-4ad4-a89d-32bc6f3fbb68": {
     "session_id": "40ee370f-8625-4ad4-a89d-32bc6f3fbb68",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_109283",
     "interview_id": "int_eval_3319",
     "consent_recorded": true,
@@ -697,7 +697,7 @@
   },
   "c5dfdfaf-3d97-4944-80c2-abf6b3563cca": {
     "session_id": "c5dfdfaf-3d97-4944-80c2-abf6b3563cca",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_554129",
     "interview_id": "int_eval_8820",
     "consent_recorded": true,
@@ -860,7 +860,7 @@
       {
         "event_id": "bd967905-c139-4d2c-a54d-298a0f4ccfac",
         "session_id": "c5dfdfaf-3d97-4944-80c2-abf6b3563cca",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "FACE_ABSENT",
         "timestamp_ms": 1794064309213,
         "duration_ms": 3200,
@@ -875,7 +875,7 @@
   },
   "9ffdd288-72a6-4478-b2b9-52a38d8aa083": {
     "session_id": "9ffdd288-72a6-4478-b2b9-52a38d8aa083",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_672911",
     "interview_id": "int_eval_4102",
     "consent_recorded": true,
@@ -1038,7 +1038,7 @@
   },
   "41aa4b77-5b9f-4fc7-b32f-f50a47ff2e06": {
     "session_id": "41aa4b77-5b9f-4fc7-b32f-f50a47ff2e06",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_992104",
     "interview_id": "int_eval_1048",
     "consent_recorded": true,
@@ -1201,7 +1201,7 @@
       {
         "event_id": "5575bcd4-8c70-44da-9e70-e10708f11b88",
         "session_id": "41aa4b77-5b9f-4fc7-b32f-f50a47ff2e06",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794063529213,
         "duration_ms": 5000,
@@ -1216,7 +1216,7 @@
   },
   "a6aa589d-154e-4096-a2b4-58fc96e1516d": {
     "session_id": "a6aa589d-154e-4096-a2b4-58fc96e1516d",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_781920",
     "interview_id": "int_eval_5501",
     "consent_recorded": true,
@@ -1379,7 +1379,7 @@
   },
   "74132eba-e1ae-444c-8e7f-8f48530a3c51": {
     "session_id": "74132eba-e1ae-444c-8e7f-8f48530a3c51",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_220918",
     "interview_id": "int_eval_9482",
     "consent_recorded": true,
@@ -1542,7 +1542,7 @@
   },
   "cf0b0551-f46c-4634-973a-72e6c7b400d5": {
     "session_id": "cf0b0551-f46c-4634-973a-72e6c7b400d5",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_612849",
     "interview_id": "int_eval_7219",
     "consent_recorded": true,
@@ -1705,7 +1705,7 @@
       {
         "event_id": "33238824-cb50-426a-b777-5fa7748faa15",
         "session_id": "cf0b0551-f46c-4634-973a-72e6c7b400d5",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "FACE_ABSENT",
         "timestamp_ms": 1794062509213,
         "duration_ms": 3400,
@@ -1720,7 +1720,7 @@
   },
   "cd2c3211-cc72-4e88-a499-f36556ac8899": {
     "session_id": "cd2c3211-cc72-4e88-a499-f36556ac8899",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_338192",
     "interview_id": "int_eval_4490",
     "consent_recorded": true,
@@ -1883,7 +1883,7 @@
   },
   "a843562d-3bfd-4a0d-8076-9fd43dc5c716": {
     "session_id": "a843562d-3bfd-4a0d-8076-9fd43dc5c716",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_847291",
     "interview_id": "int_eval_6612",
     "consent_recorded": true,
@@ -2046,7 +2046,7 @@
       {
         "event_id": "3d04f13f-f0ef-40bf-9d39-715a45cdfd48",
         "session_id": "a843562d-3bfd-4a0d-8076-9fd43dc5c716",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794061009213,
         "duration_ms": 2800,
@@ -2061,7 +2061,7 @@
   },
   "27e29388-9caf-4ed8-8c08-23e603f1bb05": {
     "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_732212",
     "interview_id": "int_eval_7912",
     "consent_recorded": true,
@@ -2224,7 +2224,7 @@
       {
         "event_id": "74686798-5e01-40b3-92d9-a51b9f06f46f",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067265472,
         "duration_ms": 0,
@@ -2243,7 +2243,7 @@
       {
         "event_id": "1559ae4f-ae92-467e-9639-e101b33c72f4",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067271062,
         "duration_ms": 0,
@@ -2262,7 +2262,7 @@
       {
         "event_id": "164f3772-4fd7-4969-8d7c-63f776f9b20d",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067276669,
         "duration_ms": 0,
@@ -2282,7 +2282,7 @@
       {
         "event_id": "b6c1281a-586f-4f44-93e0-2a2da5787567",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067282281,
         "duration_ms": 0,
@@ -2303,7 +2303,7 @@
       {
         "event_id": "69ddb3b0-7251-46ed-8787-aed02eedd6ec",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067287865,
         "duration_ms": 0,
@@ -2324,7 +2324,7 @@
       {
         "event_id": "74f03a32-4890-4e12-9422-c13441e44cad",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794067293474,
         "duration_ms": 0,
@@ -2343,7 +2343,7 @@
       {
         "event_id": "e748ba11-e0b4-469d-b4b0-ed149cc2db21",
         "session_id": "27e29388-9caf-4ed8-8c08-23e603f1bb05",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794067307074,
         "duration_ms": 2401,
@@ -2363,7 +2363,7 @@
   },
   "1d3804b4-32e8-4b6c-84f6-280e4e242915": {
     "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-    "tenant_id": "alorica",
+    "tenant_id": "enterprise-a",
     "candidate_id": "cand_823856",
     "interview_id": "int_eval_3456",
     "consent_recorded": true,
@@ -2526,7 +2526,7 @@
       {
         "event_id": "da12b690-d87e-4491-94ed-c8ed851b08aa",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794071164768,
         "duration_ms": 2392,
@@ -2546,7 +2546,7 @@
       {
         "event_id": "e25176f0-c67c-4213-a062-b43880f013af",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "MULTIPLE_FACES",
         "timestamp_ms": 1794071171199,
         "duration_ms": 2430,
@@ -2565,7 +2565,7 @@
       {
         "event_id": "1f94145c-29c3-4df2-80ff-5be70dd94924",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071183967,
         "duration_ms": 1600,
@@ -2581,7 +2581,7 @@
       {
         "event_id": "9f59d2d6-3bfe-48e1-b901-bb4cf389da22",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071189570,
         "duration_ms": 7203,
@@ -2597,7 +2597,7 @@
       {
         "event_id": "0da1be80-34e8-4109-a170-e2825807fac2",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071195156,
         "duration_ms": 12789,
@@ -2613,7 +2613,7 @@
       {
         "event_id": "e705c0b1-8bff-416b-9926-e95a95ad83c2",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071200752,
         "duration_ms": 18385,
@@ -2629,7 +2629,7 @@
       {
         "event_id": "609c1a68-cf7a-41f5-86c0-130de2b9e02b",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071206369,
         "duration_ms": 24002,
@@ -2645,7 +2645,7 @@
       {
         "event_id": "3a88be53-f7d4-4183-a871-ddaa097cd5d1",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071211967,
         "duration_ms": 29600,
@@ -2661,7 +2661,7 @@
       {
         "event_id": "0619d1de-0bb8-40ff-b03b-d631e9f427d4",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071217567,
         "duration_ms": 35200,
@@ -2677,7 +2677,7 @@
       {
         "event_id": "dd2de6e9-7c19-4bbe-94e0-53b90ef9d8a2",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071223159,
         "duration_ms": 40792,
@@ -2693,7 +2693,7 @@
       {
         "event_id": "dba4ccf5-5946-4fc2-9277-f9cc996c0712",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071228754,
         "duration_ms": 46387,
@@ -2709,7 +2709,7 @@
       {
         "event_id": "924cfb51-930b-40e0-ba02-90cb9ff11107",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794071234366,
         "duration_ms": 51999,
@@ -2725,7 +2725,7 @@
       {
         "event_id": "6328e6c0-a95a-473f-a37a-031c77ce9de2",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794247368790,
         "duration_ms": 0,
@@ -2744,7 +2744,7 @@
       {
         "event_id": "cbfc2663-d59b-4f85-97d7-da716b8249d5",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794247371162,
         "duration_ms": 1576,
@@ -2760,7 +2760,7 @@
       {
         "event_id": "bccf9772-26bc-42a7-9db8-b45ec4f52c79",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794247375973,
         "duration_ms": 0,
@@ -2779,7 +2779,7 @@
       {
         "event_id": "a4684dec-98bc-45fc-bc41-61731bc9a287",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794247384769,
         "duration_ms": 0,
@@ -2798,7 +2798,7 @@
       {
         "event_id": "cf4883c3-7909-4d92-9238-9f1f5662bd41",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "IDENTITY_MISMATCH",
         "timestamp_ms": 1794247387166,
         "duration_ms": 1604,
@@ -2814,7 +2814,7 @@
       {
         "event_id": "e92c78e0-55f4-471a-8d14-fa5b249a5a4b",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794247392761,
         "duration_ms": 0,
@@ -2833,7 +2833,7 @@
       {
         "event_id": "0ece3ee4-5ef0-4c95-b55a-ea0f39d0e9c5",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794249075322,
         "duration_ms": 0,
@@ -2854,7 +2854,7 @@
       {
         "event_id": "d3052a10-c81b-4317-a519-e2ebc5c8fa4a",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794249227727,
         "duration_ms": 0,
@@ -2875,7 +2875,7 @@
       {
         "event_id": "f3d9e3ae-4595-4e76-8b1d-91cde0293918",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794249383691,
         "duration_ms": 0,
@@ -2897,7 +2897,7 @@
       {
         "event_id": "b75ae995-6498-480c-b845-e26f04010473",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794249435839,
         "duration_ms": 0,
@@ -2918,7 +2918,7 @@
       {
         "event_id": "3b442940-d57e-406a-8bd1-28456dd01c30",
         "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
-        "tenant_id": "alorica",
+        "tenant_id": "enterprise-a",
         "event_type": "LOW_IMAGE_QUALITY",
         "timestamp_ms": 1794249957102,
         "duration_ms": 0,
@@ -2935,6 +2935,48 @@
           ]
         },
         "created_at": "2026-11-09T18:45:57.186109Z"
+      },
+      {
+        "event_id": "83376302-8f30-461d-afb1-2256bc0bb9f7",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "enterprise-a",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794250006356,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 2.3367371961699592,
+          "brightness_score": 6.565700954861111,
+          "contrast_score": 7.288103132737573,
+          "issues": [
+            "Image is blurry (blur score 2.3 < 25.0)",
+            "Image is underexposed/dark (brightness 6.6 < 25.0)",
+            "Image has low contrast (contrast score 7.3 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T18:46:46.530742Z"
+      },
+      {
+        "event_id": "12a110a5-2618-4254-8a1b-e711f48a70e4",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "enterprise-a",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794250872010,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 1.6421310763465031,
+          "brightness_score": 5.570858289930555,
+          "contrast_score": 4.936951747547187,
+          "issues": [
+            "Image is blurry (blur score 1.6 < 25.0)",
+            "Image is underexposed/dark (brightness 5.6 < 25.0)",
+            "Image has low contrast (contrast score 4.9 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T19:01:12.098774Z"
       }
     ]
   }

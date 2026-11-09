@@ -7,7 +7,7 @@ Calculates:
 - False Acceptance Rate (FAR)
 - False Rejection Rate (FRR)
 - Equal Error Rate (EER)
-- Optimal decision thresholds for enterprise tenants (Alorica, Sagility, Mastek)
+- Optimal decision thresholds for enterprise tenants (Enterprise A, Enterprise B, Enterprise C)
 """
 
 import argparse
@@ -132,17 +132,17 @@ def run_calibration(
             "accuracy": eer_point["accuracy"],
         },
         "enterprise_recommendations": {
-            "strict_policy_alorica": {
+            "strict_policy_enterprise-a": {
                 "match_threshold": max(0.42, strict_point["threshold"]),
                 "uncertain_threshold": eer_point["threshold"],
                 "target": "FAR <= 0.1% (High Security)",
             },
-            "balanced_policy_sagility": {
+            "balanced_policy_enterprise-b": {
                 "match_threshold": round(eer_point["threshold"], 2),
                 "uncertain_threshold": round(lenient_point["threshold"], 2),
                 "target": "Balanced EER",
             },
-            "lenient_policy_mastek": {
+            "lenient_policy_enterprise-c": {
                 "match_threshold": 0.38,
                 "uncertain_threshold": 0.25,
                 "target": "Low Friction / Low FRR",
@@ -152,9 +152,9 @@ def run_calibration(
 
     print("\n--- CALIBRATION RESULTS ---")
     print(f"Equal Error Rate (EER): {eer_point['far'] * 100:.2f}% at threshold {eer_point['threshold']}")
-    print(f"Strict High-Security Threshold: {calibration_report['enterprise_recommendations']['strict_policy_alorica']['match_threshold']}")
-    print(f"Sagility Balanced Threshold: {calibration_report['enterprise_recommendations']['balanced_policy_sagility']['match_threshold']}")
-    print(f"Mastek Standard Threshold: {calibration_report['enterprise_recommendations']['lenient_policy_mastek']['match_threshold']}")
+    print(f"Strict High-Security Threshold: {calibration_report['enterprise_recommendations']['strict_policy_enterprise-a']['match_threshold']}")
+    print(f"Enterprise B Balanced Threshold: {calibration_report['enterprise_recommendations']['balanced_policy_enterprise-b']['match_threshold']}")
+    print(f"Enterprise C Standard Threshold: {calibration_report['enterprise_recommendations']['lenient_policy_enterprise-c']['match_threshold']}")
 
     if output_file:
         output_file.parent.mkdir(parents=True, exist_ok=True)

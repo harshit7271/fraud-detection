@@ -16,11 +16,11 @@ def create_demo_sessions():
     now = datetime.now(UTC)
 
     candidates = [
-        {"cid": "cand_492198", "iid": "int_eval_7812", "tenant": "alorica", "events": []},
+        {"cid": "cand_492198", "iid": "int_eval_7812", "tenant": "enterprise-a", "events": []},
         {
             "cid": "cand_381042",
             "iid": "int_eval_6541",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "FACE_ABSENT",
@@ -35,7 +35,7 @@ def create_demo_sessions():
         {
             "cid": "cand_817290",
             "iid": "int_eval_9103",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "MULTIPLE_FACES",
@@ -55,11 +55,11 @@ def create_demo_sessions():
                 },
             ],
         },
-        {"cid": "cand_109283", "iid": "int_eval_3319", "tenant": "alorica", "events": []},
+        {"cid": "cand_109283", "iid": "int_eval_3319", "tenant": "enterprise-a", "events": []},
         {
             "cid": "cand_554129",
             "iid": "int_eval_8820",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "FACE_ABSENT",
@@ -71,11 +71,11 @@ def create_demo_sessions():
                 }
             ],
         },
-        {"cid": "cand_672911", "iid": "int_eval_4102", "tenant": "alorica", "events": []},
+        {"cid": "cand_672911", "iid": "int_eval_4102", "tenant": "enterprise-a", "events": []},
         {
             "cid": "cand_992104",
             "iid": "int_eval_1048",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "MULTIPLE_FACES",
@@ -87,12 +87,12 @@ def create_demo_sessions():
                 }
             ],
         },
-        {"cid": "cand_781920", "iid": "int_eval_5501", "tenant": "alorica", "events": []},
-        {"cid": "cand_220918", "iid": "int_eval_9482", "tenant": "alorica", "events": []},
+        {"cid": "cand_781920", "iid": "int_eval_5501", "tenant": "enterprise-a", "events": []},
+        {"cid": "cand_220918", "iid": "int_eval_9482", "tenant": "enterprise-a", "events": []},
         {
             "cid": "cand_612849",
             "iid": "int_eval_7219",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "FACE_ABSENT",
@@ -104,11 +104,11 @@ def create_demo_sessions():
                 }
             ],
         },
-        {"cid": "cand_338192", "iid": "int_eval_4490", "tenant": "alorica", "events": []},
+        {"cid": "cand_338192", "iid": "int_eval_4490", "tenant": "enterprise-a", "events": []},
         {
             "cid": "cand_847291",
             "iid": "int_eval_6612",
-            "tenant": "alorica",
+            "tenant": "enterprise-a",
             "events": [
                 {
                     "event_type": "MULTIPLE_FACES",

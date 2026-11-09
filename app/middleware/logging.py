@@ -37,15 +37,15 @@ class StructuredLoggingMiddleware(BaseHTTPMiddleware):
 
         # 2. Extract tenant hint safely from headers (without logging secrets)
         tenant_key = request.headers.get("X-Tenant-Key")
-        tenant_id = "anonymous"
+        tenant_id = request.headers.get("X-Tenant-Id") or "anonymous"
         if tenant_key:
-            if "alorica" in tenant_key:
-                tenant_id = "alorica"
-            elif "sagility" in tenant_key:
-                tenant_id = "sagility"
-            elif "mastek" in tenant_key:
-                tenant_id = "mastek"
-            else:
+            if "enterprise-a" in tenant_key or "alorica" in tenant_key:
+                tenant_id = "enterprise-a"
+            elif "enterprise-b" in tenant_key or "sagility" in tenant_key:
+                tenant_id = "enterprise-b"
+            elif "enterprise-c" in tenant_key or "mastek" in tenant_key:
+                tenant_id = "enterprise-c"
+            elif not tenant_id or tenant_id == "anonymous":
                 tenant_id = "tenant-auth"
 
         start_time = time.perf_counter()

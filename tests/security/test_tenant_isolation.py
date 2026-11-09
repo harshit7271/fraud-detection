@@ -8,9 +8,9 @@ from app.services.session_service import get_session_service
 from app.vision.utils import encode_image_to_jpeg
 from tests.unit.test_detector import create_synthetic_face
 
-ALORICA_AUTH = {"X-Tenant-Key": "alorica-live-key-2026"}
-SAGILITY_AUTH = {"X-Tenant-Key": "sagility-live-key-2026"}
-MASTEK_AUTH = {"X-Tenant-Key": "mastek-live-key-2026"}
+ALORICA_AUTH = {"X-Tenant-Key": "enterprise-a-key-2026"}
+SAGILITY_AUTH = {"X-Tenant-Key": "enterprise-b-key-2026"}
+MASTEK_AUTH = {"X-Tenant-Key": "enterprise-c-key-2026"}
 
 
 @pytest.fixture(autouse=True)

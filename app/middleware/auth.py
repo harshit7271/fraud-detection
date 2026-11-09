@@ -62,6 +62,17 @@ def verify_tenant_boundary(requested_tenant_id: str, context: TenantContext) -> 
     matches the authenticated tenant's identity, preventing cross-tenant spoofing.
     """
     valid_identifiers = {context.tenant_id, context.tenant_slug, context.profile.tenant_id}
+    # Backward compatibility with legacy tenant names
+    alias_map = {
+        "enterprise-a": "alorica",
+        "enterprise-b": "sagility",
+        "enterprise-c": "mastek",
+        "alorica": "enterprise-a",
+        "sagility": "enterprise-b",
+        "mastek": "enterprise-c",
+    }
+    if context.tenant_slug in alias_map:
+        valid_identifiers.add(alias_map[context.tenant_slug])
     if requested_tenant_id not in valid_identifiers:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

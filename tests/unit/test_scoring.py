@@ -88,7 +88,7 @@ def test_scoring_image_quality_zero_weight() -> None:
 
 @pytest.mark.unit
 def test_custom_tenant_policy() -> None:
-    # Custom strict tenant policy (e.g., Alorica)
+    # Custom strict tenant policy (e.g., Enterprise A)
     custom_policy = TenantScoringPolicy(
         event_weights={
             FraudEventType.IDENTITY_MISMATCH: 75.0,

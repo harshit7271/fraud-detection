@@ -18,7 +18,7 @@ from app.workers.celery_app import (
 from app.workers.tasks import process_frame_batch_task
 from tests.unit.test_detector import create_synthetic_face
 
-AUTH_HEADER = {"X-Tenant-Key": "alorica-live-key-2026"}
+AUTH_HEADER = {"X-Tenant-Key": "enterprise-a-key-2026"}
 TENANT_ID = "00000000-0000-0000-0000-000000000001"
 
 

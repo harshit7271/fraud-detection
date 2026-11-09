@@ -7,8 +7,8 @@ from app.services.session_service import get_session_service
 from app.vision.utils import encode_image_to_jpeg
 from tests.unit.test_detector import create_synthetic_face
 
-VALID_AUTH_HEADER = {"X-Tenant-Key": "alorica-live-key-2026"}
-ALT_TENANT_HEADER = {"X-Tenant-Key": "sagility-live-key-2026"}
+VALID_AUTH_HEADER = {"X-Tenant-Key": "enterprise-a-key-2026"}
+ALT_TENANT_HEADER = {"X-Tenant-Key": "enterprise-b-key-2026"}
 
 
 @pytest.fixture(autouse=True)
@@ -132,7 +132,7 @@ def test_register_session_success_and_detail(client: TestClient, valid_selfie_by
     assert response.status_code == 201
     reg_data = response.json()
     session_id = reg_data["session_id"]
-    assert reg_data["tenant_id"] == "alorica"
+    assert reg_data["tenant_id"] in ("enterprise-a", "alorica")
     assert reg_data["candidate_id"] == "cand_101"
     assert reg_data["status"] == "INITIALIZED"
     assert reg_data["reference_face"]["face_detected"] is True

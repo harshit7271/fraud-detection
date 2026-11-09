@@ -59,9 +59,9 @@ def generate_selfie_bytes() -> bytes:
 
 
 TENANT_KEYS = [
-    "alorica-live-key-2026",
-    "sagility-live-key-2026",
-    "mastek-live-key-2026",
+    "enterprise-a-key-2026",
+    "enterprise-b-key-2026",
+    "enterprise-c-key-2026",
 ]
 
 

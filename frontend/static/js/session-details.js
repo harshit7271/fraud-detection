@@ -8,35 +8,15 @@ import { renderNavigation, renderHeader, showToast } from './components.js';
 let activeSessionId = null;
 let currentReportData = null;
 let allConfirmedEvents = [];
-let eventsCurrentPage = 1;
-const EVENTS_PAGE_SIZE = 10;
+
+function setElText(id, val) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = val;
+}
 
 async function initSessionDetails() {
   renderNavigation('details');
   renderHeader('Session Forensic Analysis', 'Auditor investigation view, algorithmic decision breakdown, and compliance export.');
-
-  // Attach Events Pagination Listeners
-  const eventsPrev = document.getElementById('eventsPrevBtn');
-  const eventsNext = document.getElementById('eventsNextBtn');
-
-  if (eventsPrev) {
-    eventsPrev.addEventListener('click', () => {
-      if (eventsCurrentPage > 1) {
-        eventsCurrentPage--;
-        renderConfirmedEventsPage(eventsCurrentPage);
-      }
-    });
-  }
-
-  if (eventsNext) {
-    eventsNext.addEventListener('click', () => {
-      const maxPages = Math.ceil(allConfirmedEvents.length / EVENTS_PAGE_SIZE) || 1;
-      if (eventsCurrentPage < maxPages) {
-        eventsCurrentPage++;
-        renderConfirmedEventsPage(eventsCurrentPage);
-      }
-    });
-  }
 
   const urlParams = new URLSearchParams(window.location.search);
   activeSessionId = urlParams.get('session_id');
@@ -106,87 +86,84 @@ async function loadSessionAnalysis(sessionId) {
     const report = await api.get(`/fraud/sessions/${sessionId}/report`);
     currentReportData = report;
 
-    // Populate Candidate & Session Metadata
-    document.getElementById('detailSessionId').textContent = session.session_id;
-    document.getElementById('detailCandidateId').textContent = session.candidate_id;
-    document.getElementById('detailInterviewId').textContent = session.interview_id;
-    document.getElementById('detailTenantId').textContent = session.tenant_id;
-    document.getElementById('detailConsent').textContent = session.consent_recorded ? 'RECORDED (GDPR Compliant)' : 'NOT RECORDED';
-    document.getElementById('detailCreated').textContent = new Date(session.created_at).toLocaleString();
+    // Populate Candidate & Session Metadata safely
+    setElText('detailSessionId', session.session_id || '—');
+    setElText('detailCandidateId', session.candidate_id || '—');
+    setElText('detailInterviewId', session.interview_id || '—');
+    setElText('detailTenantId', session.tenant_id || '—');
+    setElText('detailStatus', session.status || 'ACTIVE');
 
     // Populate Risk Assessment
     const risk = report.risk_assessment;
     const score = risk ? risk.risk_score : 0.0;
     const level = risk ? risk.risk_level : 'LOW';
-    const recommendation = risk ? risk.recommendation : 'NO_ACTION';
 
-    document.getElementById('detailRiskScore').textContent = score.toFixed(1);
-    document.getElementById('detailRiskBar').style.width = `${Math.min(100, score)}%`;
+    setElText('detailRiskScore', score.toFixed(1));
 
-    const levelBadge = document.getElementById('detailRiskLevelBadge');
-    levelBadge.textContent = level;
-
-    const recBadge = document.getElementById('detailRecommendationBadge');
-    recBadge.textContent = recommendation;
-
-    if (level === 'CRITICAL' || level === 'HIGH') {
-      levelBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200';
-      recBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-rose-50 text-rose-700 border border-rose-200';
-      document.getElementById('detailRiskBar').className = 'h-full bg-gradient-to-r from-amber-500 to-rose-600 rounded-full transition-all duration-300';
-    } else if (level === 'MEDIUM') {
-      levelBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200';
-      recBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-50 text-amber-700 border border-amber-200';
-      document.getElementById('detailRiskBar').className = 'h-full bg-gradient-to-r from-emerald-500 to-amber-500 rounded-full transition-all duration-300';
-    } else {
-      levelBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200';
-      recBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200';
-      document.getElementById('detailRiskBar').className = 'h-full bg-gradient-to-r from-emerald-500 to-sky-500 rounded-full transition-all duration-300';
+    // Risk badge styling
+    const riskBadge = document.getElementById('detailRiskBadge');
+    if (riskBadge) {
+      riskBadge.textContent = level;
+      if (level === 'CRITICAL' || level === 'HIGH') {
+        riskBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-rose-50 text-rose-700 border border-rose-200';
+      } else if (level === 'MEDIUM') {
+        riskBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-amber-50 text-amber-700 border border-amber-200';
+      } else {
+        riskBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200';
+      }
     }
 
-    // Populate Confirmed Events Table with Pagination
-    allConfirmedEvents = report.confirmed_events || [];
-    eventsCurrentPage = 1;
-    renderConfirmedEventsPage(eventsCurrentPage);
+    // Recommendation text
+    let recText = 'NO ACTION REQUIRED (CLEARED)';
+    if (level === 'CRITICAL') {
+      recText = 'CRITICAL FRAUD RISK — AUDITOR REVIEW MANDATORY';
+    } else if (level === 'HIGH') {
+      recText = 'HIGH RISK DETECTED — RE-AUTHENTICATION REQUIRED';
+    } else if (level === 'MEDIUM') {
+      recText = 'MODERATE SUSPICION — AUDITOR RE-EVALUATION ADVISED';
+    }
+    setElText('detailRecommendation', recText);
 
-    // Load Matplotlib Forensic Graphic
-    loadForensicChart(sessionId);
+    // Confirmed Events
+    allConfirmedEvents = report.confirmed_events || [];
+
+    // Counters
+    setElText('detailTotalEvents', allConfirmedEvents.length);
+    const mismatchCount = allConfirmedEvents.filter(e => e.event_type === 'IDENTITY_MISMATCH').length;
+    const absenceCount = allConfirmedEvents.filter(e => e.event_type === 'FACE_ABSENT').length;
+    setElText('detailMismatchEvents', mismatchCount);
+    setElText('detailAbsenceEvents', absenceCount);
+
+    // Render Events Ledger
+    renderConfirmedEventsLedger(allConfirmedEvents);
+
+    // Load Matplotlib Forensic Trajectory Graphic
+    await loadForensicChart(sessionId);
 
   } catch (err) {
+    console.error('Failed to load investigation details:', err);
     showToast(`Failed to load investigation details: ${err.message}`, 'error');
   }
 }
 
-function renderConfirmedEventsPage(page) {
-  const tableBody = document.getElementById('detailEventsTableBody');
-  const emptyEl = document.getElementById('detailEventsEmpty');
-  const countBadge = document.getElementById('detailEventCountBadge');
-  const paginationEl = document.getElementById('eventsPagination');
-  const pageInfoEl = document.getElementById('eventsPageInfo');
-  const pageNumEl = document.getElementById('eventsPageNumber');
-  const prevBtn = document.getElementById('eventsPrevBtn');
-  const nextBtn = document.getElementById('eventsNextBtn');
+function renderConfirmedEventsLedger(events) {
+  const tableBody = document.getElementById('eventsLedgerTableBody');
+  const emptyEl = document.getElementById('eventsLedgerEmpty');
+  const countBadge = document.getElementById('eventsLedgerBadge');
 
   if (!tableBody) return;
   tableBody.innerHTML = '';
 
-  const total = allConfirmedEvents.length;
+  const total = events ? events.length : 0;
   if (countBadge) countBadge.textContent = `${total} Event${total === 1 ? '' : 's'}`;
 
   if (total === 0) {
     if (emptyEl) emptyEl.classList.remove('hidden');
-    if (paginationEl) paginationEl.classList.add('hidden');
     return;
   }
   if (emptyEl) emptyEl.classList.add('hidden');
 
-  const totalPages = Math.ceil(total / EVENTS_PAGE_SIZE) || 1;
-  eventsCurrentPage = Math.max(1, Math.min(page, totalPages));
-
-  const startIdx = (eventsCurrentPage - 1) * EVENTS_PAGE_SIZE;
-  const endIdx = Math.min(startIdx + EVENTS_PAGE_SIZE, total);
-  const pageEvents = allConfirmedEvents.slice(startIdx, endIdx);
-
-  pageEvents.forEach((ev, idx) => {
+  events.forEach((ev, idx) => {
     const row = document.createElement('tr');
     row.className = 'border-b border-zinc-100 text-xs font-mono hover:bg-zinc-50 transition';
 
@@ -199,11 +176,11 @@ function renderConfirmedEventsPage(page) {
       severityBadge = 'bg-emerald-50 text-emerald-700 border-emerald-200';
     }
 
-    const timeStr = new Date(ev.timestamp_ms).toLocaleTimeString();
-    const durationSec = (ev.duration_ms / 1000).toFixed(1);
+    const timeStr = ev.timestamp_ms ? new Date(ev.timestamp_ms).toLocaleTimeString() : '—';
+    const durationSec = typeof ev.duration_ms === 'number' ? (ev.duration_ms / 1000).toFixed(1) : '—';
+    const metadataStr = ev.evidence_metadata ? JSON.stringify(ev.evidence_metadata) : '{}';
 
     row.innerHTML = `
-      <td class="py-3 px-4 text-zinc-500">#${startIdx + idx + 1}</td>
       <td class="py-3 px-4 font-bold text-zinc-950">
         <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-900 font-bold">
           ${ev.event_type}
@@ -214,29 +191,20 @@ function renderConfirmedEventsPage(page) {
           ${ev.severity}
         </span>
       </td>
-      <td class="py-3 px-4 text-zinc-900 font-bold">${(ev.confidence * 100).toFixed(0)}%</td>
-      <td class="py-3 px-4 text-zinc-700 font-medium">${durationSec}s</td>
+      <td class="py-3 px-4 text-zinc-900 font-bold">${typeof ev.confidence === 'number' ? (ev.confidence * 100).toFixed(0) + '%' : '100%'}</td>
       <td class="py-3 px-4 text-zinc-600">${timeStr}</td>
-      <td class="py-3 px-4 text-zinc-500 font-mono text-[10px] truncate max-w-[200px]" title='${JSON.stringify(ev.evidence_metadata)}'>
-        ${JSON.stringify(ev.evidence_metadata)}
+      <td class="py-3 px-4 text-zinc-700 font-medium">${durationSec}s</td>
+      <td class="py-3 px-4 text-zinc-500 font-mono text-[10px] text-right truncate max-w-[220px]" title='${metadataStr}'>
+        ${metadataStr}
       </td>
     `;
     tableBody.appendChild(row);
   });
-
-  // Update Pagination Controls
-  if (paginationEl) {
-    paginationEl.classList.remove('hidden');
-    if (pageInfoEl) pageInfoEl.textContent = `Showing ${startIdx + 1} to ${endIdx} of ${total} events`;
-    if (pageNumEl) pageNumEl.textContent = `Page ${eventsCurrentPage} of ${totalPages}`;
-    if (prevBtn) prevBtn.disabled = eventsCurrentPage <= 1;
-    if (nextBtn) nextBtn.disabled = eventsCurrentPage >= totalPages;
-  }
 }
 
 async function loadForensicChart(sessionId) {
   const chartImg = document.getElementById('detailChartImg');
-  const chartLoading = document.getElementById('detailChartLoading');
+  const chartSpinner = document.getElementById('detailChartSpinner');
 
   try {
     const res = await api.fetchWithTimeout(api.buildUrl(`/fraud/sessions/${sessionId}/analytics/chart`), {
@@ -244,11 +212,20 @@ async function loadForensicChart(sessionId) {
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const blob = await res.blob();
-    chartImg.src = URL.createObjectURL(blob);
-    chartLoading.classList.add('hidden');
-    chartImg.classList.remove('hidden');
+    if (chartImg) {
+      chartImg.src = URL.createObjectURL(blob);
+      chartImg.classList.remove('hidden');
+    }
+    if (chartSpinner) {
+      chartSpinner.classList.add('hidden');
+    }
   } catch (err) {
-    chartLoading.textContent = `Forensic telemetry diagram unavailable (${err.message})`;
+    console.error('Forensic chart rendering error:', err);
+    if (chartSpinner) {
+      chartSpinner.innerHTML = `
+        <span class="text-xs font-mono text-zinc-500">Forensic Trajectory graphic not available for this session (${err.message})</span>
+      `;
+    }
   }
 }
 

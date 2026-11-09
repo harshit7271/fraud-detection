@@ -9,7 +9,7 @@ export const Config = {
     if (stored) {
       try {
         const parsed = new URL(stored);
-        // If current window is localhost/127.0.0.1, and stored points to remote HF space, prefer local
+        // If current window is localhost/127.0.0.1, and stored points to remote space, prefer local
         if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') &&
             parsed.hostname !== 'localhost' && parsed.hostname !== '127.0.0.1') {
           return `${window.location.origin}/api/v1`;
@@ -29,8 +29,14 @@ export const Config = {
   // Active Tenant Authentication Key
   getTenantKey() {
     const key = localStorage.getItem('faceguard_tenant_key');
-    if (!key || key === 'alorica-test' || key === 'default' || key.trim() === '') {
-      return 'alorica-live-key-2026';
+    if (!key || key === 'alorica-live-key-2026' || key === 'alorica-test' || key === 'default' || key.trim() === '') {
+      return 'enterprise-a-key-2026';
+    }
+    if (key === 'sagility-live-key-2026' || key === 'sagility-test') {
+      return 'enterprise-b-key-2026';
+    }
+    if (key === 'mastek-live-key-2026' || key === 'mastek-test') {
+      return 'enterprise-c-key-2026';
     }
     return key.trim();
   },
@@ -42,16 +48,16 @@ export const Config = {
   // Active Tenant ID / Slug
   getTenantId() {
     const id = localStorage.getItem('faceguard_tenant_id');
-    if (!id || id === 'alorica-test') return 'alorica';
-    if (id === 'sagility-test') return 'sagility';
-    if (id === 'mastek-test') return 'mastek';
+    if (!id || id === 'alorica' || id === 'alorica-test') return 'enterprise-a';
+    if (id === 'sagility' || id === 'sagility-test') return 'enterprise-b';
+    if (id === 'mastek' || id === 'mastek-test') return 'enterprise-c';
     return id.trim();
   },
   setTenantId(id) {
     if (id) {
-      const sanitized = id === 'alorica-test' ? 'alorica' :
-                        id === 'sagility-test' ? 'sagility' :
-                        id === 'mastek-test' ? 'mastek' : id.trim();
+      const sanitized = (id === 'alorica' || id === 'alorica-test') ? 'enterprise-a' :
+                        (id === 'sagility' || id === 'sagility-test') ? 'enterprise-b' :
+                        (id === 'mastek' || id === 'mastek-test') ? 'enterprise-c' : id.trim();
       localStorage.setItem('faceguard_tenant_id', sanitized);
     } else {
       localStorage.removeItem('faceguard_tenant_id');
@@ -87,8 +93,8 @@ export const Config = {
 
   // Pre-configured Enterprise Tenants
   AVAILABLE_TENANTS: [
-    { id: 'alorica', name: 'Alorica Global', key: 'alorica-live-key-2026' },
-    { id: 'sagility', name: 'Sagility Health', key: 'sagility-live-key-2026' },
-    { id: 'mastek', name: 'Mastek Enterprise', key: 'mastek-live-key-2026' },
+    { id: 'enterprise-a', name: 'Enterprise A', key: 'enterprise-a-key-2026' },
+    { id: 'enterprise-b', name: 'Enterprise B', key: 'enterprise-b-key-2026' },
+    { id: 'enterprise-c', name: 'Enterprise C', key: 'enterprise-c-key-2026' },
   ]
 };

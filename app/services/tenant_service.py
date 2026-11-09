@@ -52,11 +52,11 @@ class TenantProfile:
 
 # Seed enterprise tenant configurations with hashed credentials
 _PREDEFINED_TENANTS: dict[str, TenantProfile] = {
-    "alorica": TenantProfile(
+    "enterprise-a": TenantProfile(
         tenant_id="00000000-0000-0000-0000-000000000001",
-        slug="alorica",
-        name="Alorica Global Services",
-        api_key_hash=hash_api_key("alorica-live-key-2026"),
+        slug="enterprise-a",
+        name="Enterprise A",
+        api_key_hash=hash_api_key("enterprise-a-key-2026"),
         face_match_threshold=0.40,
         face_uncertain_threshold=0.28,
         multiple_faces_debounce_ms=2000,
@@ -68,14 +68,14 @@ _PREDEFINED_TENANTS: dict[str, TenantProfile] = {
             suspicious_liveness=30.0,
         ),
     ),
-    "sagility": TenantProfile(
+    "enterprise-b": TenantProfile(
         tenant_id="00000000-0000-0000-0000-000000000002",
-        slug="sagility",
-        name="Sagility Health BPO",
-        api_key_hash=hash_api_key("sagility-live-key-2026"),
+        slug="enterprise-b",
+        name="Enterprise B",
+        api_key_hash=hash_api_key("enterprise-b-key-2026"),
         face_match_threshold=0.38,
         face_uncertain_threshold=0.25,
-        multiple_faces_debounce_ms=1500,  # Stricter multiple-face debounce for healthcare
+        multiple_faces_debounce_ms=1500,  # Stricter multiple-face debounce
         face_absence_debounce_ms=3000,
         event_weights=EventWeights(
             face_absent=25.0,
@@ -84,15 +84,15 @@ _PREDEFINED_TENANTS: dict[str, TenantProfile] = {
             suspicious_liveness=30.0,
         ),
     ),
-    "mastek": TenantProfile(
+    "enterprise-c": TenantProfile(
         tenant_id="00000000-0000-0000-0000-000000000003",
-        slug="mastek",
-        name="Mastek Enterprise IT",
-        api_key_hash=hash_api_key("mastek-live-key-2026"),
+        slug="enterprise-c",
+        name="Enterprise C",
+        api_key_hash=hash_api_key("enterprise-c-key-2026"),
         face_match_threshold=0.38,
         face_uncertain_threshold=0.25,
         multiple_faces_debounce_ms=2000,
-        face_absence_debounce_ms=2500,  # Stricter absence debounce for engineering
+        face_absence_debounce_ms=2500,  # Stricter absence debounce
         event_weights=EventWeights(
             face_absent=30.0,
             multiple_faces=30.0,
@@ -106,6 +106,18 @@ _PREDEFINED_TENANTS: dict[str, TenantProfile] = {
         name="Test Development Tenant",
         api_key_hash=hash_api_key("test-tenant-key-dev"),
     ),
+}
+
+_LEGACY_KEY_ALIASES: dict[str, str] = {
+    "alorica-live-key-2026": "enterprise-a",
+    "sagility-live-key-2026": "enterprise-b",
+    "mastek-live-key-2026": "enterprise-c",
+}
+
+_LEGACY_SLUG_ALIASES: dict[str, str] = {
+    "alorica": "enterprise-a",
+    "sagility": "enterprise-b",
+    "mastek": "enterprise-c",
 }
 
 
@@ -126,15 +138,23 @@ class TenantService:
         for tenant in self._tenants.values():
             if hmac.compare_digest(tenant.api_key_hash, calculated_hash):
                 return tenant
+        # Support legacy transition keys transparently
+        if raw_api_key in _LEGACY_KEY_ALIASES:
+            alias_slug = _LEGACY_KEY_ALIASES[raw_api_key]
+            return self._tenants.get(alias_slug)
         return None
 
     def get_tenant_by_id_or_slug(self, identifier: str) -> TenantProfile | None:
         # Check by slug
         if identifier in self._tenants:
             return self._tenants[identifier]
+        if identifier in _LEGACY_SLUG_ALIASES:
+            return self._tenants.get(_LEGACY_SLUG_ALIASES[identifier])
         clean_slug = identifier.replace("-test", "").replace("-live", "")
         if clean_slug in self._tenants:
             return self._tenants[clean_slug]
+        if clean_slug in _LEGACY_SLUG_ALIASES:
+            return self._tenants.get(_LEGACY_SLUG_ALIASES[clean_slug])
         # Check by tenant_id UUID
         for tenant in self._tenants.values():
             if tenant.tenant_id == identifier:

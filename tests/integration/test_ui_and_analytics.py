@@ -6,8 +6,8 @@ from app.services.session_service import get_session_service
 from app.vision.utils import encode_image_to_jpeg
 from tests.unit.test_detector import create_synthetic_face
 
-AUTH_HEADER = {"X-Tenant-Key": "alorica-live-key-2026"}
-ALT_AUTH = {"X-Tenant-Key": "sagility-live-key-2026"}
+AUTH_HEADER = {"X-Tenant-Key": "enterprise-a-key-2026"}
+ALT_AUTH = {"X-Tenant-Key": "enterprise-b-key-2026"}
 
 
 @pytest.fixture(autouse=True)

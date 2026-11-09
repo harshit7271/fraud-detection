@@ -86,11 +86,11 @@ export class ApiClient {
       });
       return await this.parseResponse(response);
     } catch (err) {
-      // Self-healing: If 401 or 403 due to stale tenant key in browser, reset to alorica default & retry once
-      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'alorica-live-key-2026') {
+      // Self-healing: If 401 or 403 due to stale tenant key in browser, reset to Enterprise A default & retry once
+      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'enterprise-a-key-2026') {
         console.warn('Stale tenant auth detected. Auto-recovering to standard tenant key...');
-        Config.setTenantKey('alorica-live-key-2026');
-        Config.setTenantId('alorica');
+        Config.setTenantKey('enterprise-a-key-2026');
+        Config.setTenantId('enterprise-a');
         const retryResponse = await this.fetchWithTimeout(url, {
           method: 'GET',
           headers: this.getHeaders(customHeaders),
@@ -114,10 +114,10 @@ export class ApiClient {
       });
       return await this.parseResponse(response);
     } catch (err) {
-      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'alorica-live-key-2026') {
+      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'enterprise-a-key-2026') {
         console.warn('Stale tenant auth detected. Auto-recovering to standard tenant key...');
-        Config.setTenantKey('alorica-live-key-2026');
-        Config.setTenantId('alorica');
+        Config.setTenantKey('enterprise-a-key-2026');
+        Config.setTenantId('enterprise-a');
         const retryResponse = await this.fetchWithTimeout(url, {
           method: 'POST',
           headers: this.getHeaders({
@@ -145,10 +145,10 @@ export class ApiClient {
       });
       return await this.parseResponse(response);
     } catch (err) {
-      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'alorica-live-key-2026') {
+      if ((err.status === 401 || err.status === 403) && Config.getTenantKey() !== 'enterprise-a-key-2026') {
         console.warn('Stale tenant auth detected. Auto-recovering to standard tenant key...');
-        Config.setTenantKey('alorica-live-key-2026');
-        Config.setTenantId('alorica');
+        Config.setTenantKey('enterprise-a-key-2026');
+        Config.setTenantId('enterprise-a');
         const retryHeaders = this.getHeaders(customHeaders);
         delete retryHeaders['Content-Type'];
         const retryResponse = await this.fetchWithTimeout(url, {

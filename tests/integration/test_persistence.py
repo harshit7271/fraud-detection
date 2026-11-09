@@ -40,8 +40,8 @@ async def test_session_repository_crud_and_tenant_isolation(async_db_session: As
     # 1. Create Tenant A
     tenant_a = Tenant(
         id=tenant_a_id,
-        slug="alorica-test",
-        name="Alorica Inc",
+        slug="enterprise-a-test",
+        name="Enterprise A",
         api_key_hash="hash_123",
     )
     async_db_session.add(tenant_a)
