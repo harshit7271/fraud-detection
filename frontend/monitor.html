@@ -2,7 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <title>Live Interview Monitoring — FACEGUARD AI</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -32,14 +34,14 @@
     <!-- Persistent Sidebar -->
     <div id="sidebarContainer"></div>
 
-    <!-- Main Content Container -->
-    <div class="ml-64 flex flex-col min-h-screen">
+    <!-- Main Content Container (Responsive margin for sidebar) -->
+    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden min-w-0">
         
         <!-- Header Bar -->
         <div id="headerContainer"></div>
 
         <!-- Monitoring Room Work Area -->
-        <main class="flex-1 p-8 space-y-6 max-w-7xl">
+        <main class="flex-1 p-3.5 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 max-w-7xl w-full min-w-0">
             
             <!-- Session Meta & Controls Bar -->
             <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
@@ -58,23 +60,27 @@
                 </div>
 
                 <!-- Primary Action Controls -->
-                <div class="flex items-center gap-2.5">
-                    <button id="toggleCameraBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-3.5 rounded-xl border border-slate-200 transition shadow-xs flex items-center gap-1.5">
+                <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
+                    <button id="toggleCameraBtn" class="flex-1 sm:flex-initial bg-white hover:bg-slate-50 active:scale-95 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 transition shadow-xs flex items-center justify-center gap-1.5 min-h-[38px] cursor-pointer">
                         <span>⏹</span>
                         <span>Stop Camera</span>
                     </button>
-                    <button id="toggleProctorBtn" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold py-2 px-3.5 rounded-xl transition shadow-sm flex items-center gap-1.5">
+                    <button id="flipCameraBtn" type="button" class="bg-white hover:bg-slate-50 active:scale-95 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 transition shadow-xs flex items-center justify-center gap-1.5 min-h-[38px] cursor-pointer" title="Flip Camera between front and back">
+                        <span>🔄</span>
+                        <span>Flip Cam</span>
+                    </button>
+                    <button id="toggleProctorBtn" class="flex-1 sm:flex-initial bg-amber-600 hover:bg-amber-700 active:scale-95 text-white text-xs font-bold py-2 px-3.5 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 min-h-[38px] cursor-pointer">
                         <span>⏸</span>
                         <span>Pause Proctoring</span>
                     </button>
-                    <button id="manualSnapBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 transition shadow-xs" title="Manually analyze single frame">
-                        <span>⚡ Snap Frame</span>
+                    <button id="manualSnapBtn" class="bg-white hover:bg-slate-50 active:scale-95 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 transition shadow-xs min-h-[38px] cursor-pointer" title="Manually analyze single frame">
+                        <span>⚡ Snap</span>
                     </button>
-                    <button id="viewChartBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2 px-3.5 rounded-xl transition shadow-sm flex items-center gap-1.5">
+                    <button id="viewChartBtn" class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-semibold py-2 px-3 rounded-xl transition shadow-sm flex items-center justify-center gap-1.5 min-h-[38px] cursor-pointer">
                         <span>📊</span>
-                        <span>Matplotlib Chart</span>
+                        <span>Analytics</span>
                     </button>
-                    <button id="concludeSessionBtn" class="bg-rose-50 hover:bg-rose-100 text-rose-700 text-xs font-semibold py-2 px-3.5 rounded-xl border border-rose-200 transition flex items-center gap-1.5">
+                    <button id="concludeSessionBtn" class="bg-rose-50 hover:bg-rose-100 active:scale-95 text-rose-700 text-xs font-semibold py-2 px-3 rounded-xl border border-rose-200 transition flex items-center justify-center gap-1.5 min-h-[38px] cursor-pointer">
                         <span>🏁</span>
                         <span>Conclude</span>
                     </button>
@@ -100,7 +106,7 @@
                         <canvas id="monitorCanvas" class="hud-canvas"></canvas>
 
                         <!-- Floating FPS & Telemetry Pill -->
-                        <div class="absolute bottom-3 left-3 bg-white/95 backdrop-blur-md border border-slate-200 px-3 py-1 rounded-xl text-[11px] font-mono text-slate-600 flex items-center gap-3 shadow-sm">
+                        <div class="absolute bottom-2 left-2 sm:bottom-3 sm:left-3 bg-white/95 backdrop-blur-md border border-slate-200 px-2.5 py-1 rounded-xl text-[10px] sm:text-[11px] font-mono text-slate-600 flex flex-wrap items-center gap-2 sm:gap-3 shadow-sm max-w-[95%]">
                             <div class="flex items-center gap-1.5">
                                 <span id="cameraStatusPill" class="w-2 h-2 rounded-full bg-emerald-500"></span>
                                 <span id="cameraStatusText" class="font-bold text-slate-800">ACTIVE</span>

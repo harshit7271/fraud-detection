@@ -1,9 +1,38 @@
 /**
  * FACEGUARD AI - Reusable UI Components (Light Enterprise Theme)
- * Sidebar navigation, top header, status widgets, and toast notifications.
+ * Responsive sidebar navigation (mobile drawer + desktop pinned), top header with hamburger toggle,
+ * status widgets, and toast notifications.
  */
 import { Config } from './config.js';
 import { api } from './api.js';
+
+export function openSidebar() {
+  const sidebar = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (sidebar && backdrop) {
+    sidebar.classList.remove('-translate-x-full');
+    backdrop.classList.remove('hidden');
+    requestAnimationFrame(() => {
+      backdrop.classList.remove('opacity-0');
+      backdrop.classList.add('opacity-100');
+    });
+    document.body.classList.add('overflow-hidden', 'lg:overflow-auto');
+  }
+}
+
+export function closeSidebar() {
+  const sidebar = document.getElementById('appSidebar');
+  const backdrop = document.getElementById('sidebarBackdrop');
+  if (sidebar && backdrop) {
+    sidebar.classList.add('-translate-x-full');
+    backdrop.classList.remove('opacity-100');
+    backdrop.classList.add('opacity-0');
+    setTimeout(() => {
+      backdrop.classList.add('hidden');
+    }, 300);
+    document.body.classList.remove('overflow-hidden', 'lg:overflow-auto');
+  }
+}
 
 export function renderNavigation(activePage = 'dashboard') {
   const sidebarContainer = document.getElementById('sidebarContainer');
@@ -23,46 +52,45 @@ export function renderNavigation(activePage = 'dashboard') {
     {
       id: 'dashboard',
       label: 'Dashboard',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`,
       href: `/`,
     },
     {
       id: 'register',
       label: 'Candidate Registration',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>`,
       href: `/register`,
     },
     {
       id: 'monitor',
       label: 'Live Monitoring',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
       href: `/monitor`,
     },
     {
       id: 'history',
       label: 'Session History',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
       href: `/history`,
     },
     {
       id: 'details',
       label: 'Session Analysis',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>`,
       href: `/session-details`,
     },
     {
       id: 'settings',
       label: 'Settings',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>`,
       href: `/settings`,
     },
     {
       id: 'performance',
       label: 'Performance & Benchmarks',
-      icon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+      icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
       href: `/performance-report`,
     },
-
   ];
 
   const navHtml = navItems.map(item => {
@@ -72,25 +100,35 @@ export function renderNavigation(activePage = 'dashboard') {
       : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border-transparent';
 
     return `
-      <a href="${item.href}" class="flex items-center gap-3 px-3.5 py-2.5 rounded-xl border text-sm transition-all duration-150 ${activeClasses}">
+      <a href="${item.href}" class="nav-item flex items-center gap-3 px-3.5 py-3 rounded-xl border text-sm transition-all duration-150 ${activeClasses}">
         <span class="${isActive ? 'text-indigo-600' : 'text-slate-400'}">${item.icon}</span>
-        <span>${item.label}</span>
+        <span class="truncate">${item.label}</span>
       </a>
     `;
   }).join('');
 
   sidebarContainer.innerHTML = `
-    <aside class="w-64 h-screen fixed top-0 left-0 bg-white border-r border-slate-200 flex flex-col justify-between p-5 z-40 select-none shadow-xs">
+    <!-- Mobile Backdrop Overlay -->
+    <div id="sidebarBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 hidden transition-opacity duration-300 opacity-0 lg:hidden"></div>
+
+    <!-- Responsive Sidebar Drawer -->
+    <aside id="appSidebar" class="w-72 sm:w-64 h-full fixed top-0 left-0 bg-white border-r border-slate-200 flex flex-col justify-between p-5 z-50 select-none shadow-2xl lg:shadow-xs transition-transform duration-300 -translate-x-full lg:translate-x-0 overflow-y-auto">
       <!-- Brand & Platform Header -->
       <div class="space-y-6">
-        <div class="flex items-center gap-3 px-1">
-          <div class="w-9 h-9 rounded-xl p-1 bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center shadow-md shadow-indigo-600/20">
-            <img src="/static/assets/logo.svg" alt="FACEGUARD Logo" class="w-7 h-7" />
+        <div class="flex items-center justify-between px-1">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl p-1 bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center shadow-md shadow-indigo-600/20 flex-shrink-0">
+              <img src="/static/assets/logo.svg" alt="FACEGUARD Logo" class="w-7 h-7" />
+            </div>
+            <div>
+              <h1 class="text-sm font-extrabold tracking-wider text-slate-900 uppercase font-mono">FACEGUARD AI</h1>
+              <p class="text-[10px] tracking-tight text-slate-500 font-medium">Fraud Detection Platform</p>
+            </div>
           </div>
-          <div>
-            <h1 class="text-sm font-extrabold tracking-wider text-slate-900 uppercase font-mono">FACEGUARD AI</h1>
-            <p class="text-[10px] tracking-tight text-slate-500 font-medium">Face Fraud Detection Platform</p>
-          </div>
+          <!-- Close Button for Mobile -->
+          <button id="sidebarCloseBtn" type="button" class="lg:hidden p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 active:scale-95 transition cursor-pointer" aria-label="Close navigation">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
         </div>
 
         <!-- Navigation Menu -->
@@ -100,7 +138,7 @@ export function renderNavigation(activePage = 'dashboard') {
       </div>
 
       <!-- System Status Widget -->
-      <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
+      <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 mt-6">
         <div class="flex items-center justify-between">
           <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">System Status</span>
           <span id="sysStatusPulse" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -123,6 +161,28 @@ export function renderNavigation(activePage = 'dashboard') {
     </aside>
   `;
 
+  // Attach Close & Backdrop Listeners
+  const closeBtn = document.getElementById('sidebarCloseBtn');
+  const backdrop = document.getElementById('sidebarBackdrop');
+
+  if (closeBtn) closeBtn.addEventListener('click', closeSidebar);
+  if (backdrop) backdrop.addEventListener('click', closeSidebar);
+
+  // Close sidebar on mobile when navigating
+  const navLinks = sidebarContainer.querySelectorAll('.nav-item');
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      if (window.innerWidth < 1024) {
+        closeSidebar();
+      }
+    });
+  });
+
+  // Close on Escape key
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeSidebar();
+  });
+
   // Start Background Status Probe
   checkSystemStatus();
 }
@@ -141,29 +201,44 @@ export function renderHeader(title = 'Dashboard', subtitle = '') {
   `).join('');
 
   headerContainer.innerHTML = `
-    <header class="h-16 border-b border-slate-200 bg-white/90 backdrop-blur-xl px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-      <div>
-        <h2 class="text-base font-bold text-slate-900 tracking-tight">${title}</h2>
-        ${subtitle ? `<p class="text-xs text-slate-500">${subtitle}</p>` : ''}
+    <header class="h-16 border-b border-slate-200 bg-white/90 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+      <div class="flex items-center gap-3 min-w-0">
+        <!-- Mobile Menu Toggle Button (Hamburger) -->
+        <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 -ml-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:scale-95 transition focus:outline-none cursor-pointer flex-shrink-0" aria-label="Open navigation menu">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <div class="min-w-0">
+          <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight truncate">${title}</h2>
+          ${subtitle ? `<p class="text-[11px] sm:text-xs text-slate-500 truncate hidden sm:block">${subtitle}</p>` : ''}
+        </div>
       </div>
 
-      <div class="flex items-center gap-4">
+      <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         <!-- Enterprise Tenant Selector -->
-        <div class="flex items-center gap-2 bg-slate-50 border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-600">
-          <span class="text-slate-400 font-mono text-[11px]">Tenant:</span>
-          <select id="tenantSelectHeader" class="bg-transparent text-slate-800 font-medium focus:outline-none cursor-pointer">
+        <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 sm:px-3 py-1.5 text-xs text-slate-600">
+          <span class="text-slate-400 font-mono text-[11px] hidden sm:inline">Tenant:</span>
+          <select id="tenantSelectHeader" class="bg-transparent text-slate-800 font-medium focus:outline-none cursor-pointer text-xs max-w-[110px] sm:max-w-none">
             ${tenantOptions}
           </select>
         </div>
 
         <!-- Documentation Shortlink -->
-        <a href="https://harshit7271-faceguard-ai.hf.space/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white transition flex items-center gap-1.5 shadow-xs">
-          <span>API Docs</span>
-          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+        <a href="https://harshit7271-faceguard-ai.hf.space/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white transition flex items-center gap-1 shadow-xs" title="Open API Documentation">
+          <span>Docs</span>
+          <svg class="w-3.5 h-3.5 hidden sm:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </div>
     </header>
   `;
+
+  // Attach Hamburger Menu Listener
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  if (mobileMenuBtn) {
+    mobileMenuBtn.addEventListener('click', () => {
+      openSidebar();
+    });
+  }
 
   // Attach Tenant Switch Listener
   const tenantSelect = document.getElementById('tenantSelectHeader');
@@ -244,7 +319,7 @@ export function showToast(message, type = 'info') {
   if (!toastContainer) {
     toastContainer = document.createElement('div');
     toastContainer.id = 'toastContainer';
-    toastContainer.className = 'fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none';
+    toastContainer.className = 'fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none max-w-[90vw]';
     document.body.appendChild(toastContainer);
   }
 
@@ -259,7 +334,7 @@ export function showToast(message, type = 'info') {
   toast.className = `pointer-events-auto px-4 py-3 rounded-xl border text-xs font-semibold flex items-center gap-2.5 transition-all duration-300 transform translate-y-3 opacity-0 ${borderColors[type] || borderColors.info}`;
   toast.innerHTML = `
     <span>${type === 'success' ? '✓' : type === 'error' ? '✕' : type === 'warning' ? '⚠' : 'ℹ'}</span>
-    <span>${message}</span>
+    <span class="break-words">${message}</span>
   `;
 
   toastContainer.appendChild(toast);

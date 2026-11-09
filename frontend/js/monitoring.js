@@ -124,6 +124,28 @@ async function initMonitoring() {
     });
   }
 
+  // Mobile Camera Flip (Front / Back)
+  const flipCameraBtn = document.getElementById('flipCameraBtn');
+  if (flipCameraBtn) {
+    flipCameraBtn.addEventListener('click', async () => {
+      try {
+        const res = await camera.flipCamera(videoEl);
+        document.getElementById('videoResolutionText').textContent = `${res.width}x${res.height}`;
+        showToast(`Switched to ${camera.facingMode === 'user' ? 'Front (Selfie)' : 'Back'} Camera`, 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+  }
+
+  // Mobile Orientation & Window Resize: keep HUD canvas sized accurately
+  window.addEventListener('resize', () => {
+    if (camera.videoElement && canvasEl) {
+      canvasEl.width = camera.videoElement.videoWidth || 640;
+      canvasEl.height = camera.videoElement.videoHeight || 480;
+    }
+  });
+
   // Matplotlib Analytics Modal Handler
   if (viewChartBtn) {
     viewChartBtn.addEventListener('click', () => {

@@ -67,6 +67,19 @@ async function initRegistration() {
     });
   }
 
+  // Mobile Camera Flip (Front / Back)
+  const flipCamBtn = document.getElementById('flipCamBtn');
+  if (flipCamBtn) {
+    flipCamBtn.addEventListener('click', async () => {
+      try {
+        const res = await camera.flipCamera(videoEl);
+        showToast(`Switched to ${camera.facingMode === 'user' ? 'Front (Selfie)' : 'Back'} Camera`, 'info');
+      } catch (err) {
+        showToast(err.message, 'error');
+      }
+    });
+  }
+
   // Local Image Upload Fallback
   if (uploadInput) {
     uploadInput.addEventListener('change', async (e) => {
