@@ -2,10 +2,10 @@
  * FACEGUARD AI - Settings & Client Preferences Controller
  * Configures frame sampling rates, JPEG compression, preferred camera, tenant auth, and API connectivity.
  */
-import { Config } from './config.js';
-import { api } from './api.js';
-import { CameraManager } from './camera.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { Config } from './config.js?v=3.0.0';
+import { api } from './api.js?v=3.0.0';
+import { CameraManager } from './camera.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 const camera = new CameraManager();
 

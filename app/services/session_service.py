@@ -133,8 +133,9 @@ class SessionService:
 
             ts = get_tenant_service()
             for sid, item in raw_data.items():
-                tenant_id = item["tenant_id"]
-                profile = ts.get_tenant_by_id_or_slug(tenant_id)
+                raw_tenant_id = item["tenant_id"]
+                profile = ts.get_tenant_by_id_or_slug(raw_tenant_id)
+                tenant_id = profile.slug if profile else raw_tenant_id
                 if profile:
                     face_absence_debounce = profile.face_absence_debounce_ms
                     multiple_faces_debounce = profile.multiple_faces_debounce_ms
@@ -159,7 +160,12 @@ class SessionService:
                     scoring_policy = TenantScoringPolicy()
 
                 scoring_engine = RiskScoringEngine(policy=scoring_policy)
-                confirmed_events = [FraudEvent(**e) for e in item.get("confirmed_events", [])]
+                raw_events = item.get("confirmed_events", [])
+                for e in raw_events:
+                    e_tid = e.get("tenant_id", "")
+                    e_prof = ts.get_tenant_by_id_or_slug(e_tid)
+                    e["tenant_id"] = e_prof.slug if e_prof else tenant_id
+                confirmed_events = [FraudEvent(**e) for e in raw_events]
 
                 self._sessions[sid] = SessionData(
                     session_id=item["session_id"],
@@ -331,9 +337,12 @@ class SessionService:
 
     def get_session_detail(self, session_id: str, tenant_id: str) -> SessionDetailResponse:
         session = self.get_session(session_id, tenant_id)
+        ts = get_tenant_service()
+        profile = ts.get_tenant_by_id_or_slug(session.tenant_id)
+        clean_tenant = profile.slug if profile else session.tenant_id
         return SessionDetailResponse(
             session_id=session.session_id,
-            tenant_id=session.tenant_id,
+            tenant_id=clean_tenant,
             candidate_id=session.candidate_id,
             interview_id=session.interview_id,
             status=session.status,
@@ -345,17 +354,26 @@ class SessionService:
 
     def get_fraud_report(self, session_id: str, tenant_id: str) -> FraudReportResponse:
         session = self.get_session(session_id, tenant_id)
+        ts = get_tenant_service()
+        profile = ts.get_tenant_by_id_or_slug(session.tenant_id)
+        clean_tenant = profile.slug if profile else session.tenant_id
         risk = session.latest_risk
+
+        sanitized_events = []
+        for e in session.confirmed_events:
+            ev_dict = e.model_dump()
+            ev_dict["tenant_id"] = clean_tenant
+            sanitized_events.append(ev_dict)
 
         return FraudReportResponse(
             session_id=session.session_id,
-            tenant_id=session.tenant_id,
+            tenant_id=clean_tenant,
             candidate_id=session.candidate_id,
             interview_id=session.interview_id,
             status=session.status,
             risk_assessment=risk,
             total_events=len(session.confirmed_events),
-            confirmed_events=[e.model_dump() for e in session.confirmed_events],
+            confirmed_events=sanitized_events,
         )
 
     def list_sessions(self, tenant_id: str) -> list[SessionDetailResponse]:
@@ -373,7 +391,7 @@ class SessionService:
                     results.append(
                         SessionDetailResponse(
                             session_id=s.session_id,
-                            tenant_id=s.tenant_id,
+                            tenant_id=s_slug,
                             candidate_id=s.candidate_id,
                             interview_id=s.interview_id,
                             status=s.status,
@@ -389,7 +407,16 @@ class SessionService:
     def get_session_events(self, session_id: str, tenant_id: str) -> list[FraudEvent]:
         """Returns the list of confirmed fraud events for a session."""
         session = self.get_session(session_id, tenant_id)
-        return list(session.confirmed_events)
+        ts = get_tenant_service()
+        profile = ts.get_tenant_by_id_or_slug(session.tenant_id)
+        clean_tenant = profile.slug if profile else session.tenant_id
+
+        sanitized_events = []
+        for e in session.confirmed_events:
+            ev = e.model_copy()
+            ev.tenant_id = clean_tenant
+            sanitized_events.append(ev)
+        return sanitized_events
 
     def reset(self) -> None:
         """Clears all sessions (useful for tests)."""

@@ -2,10 +2,10 @@
  * FACEGUARD AI - Candidate Registration Controller
  * Webcam selfie capture, local file upload, pre-validation diagnostics, and session registration.
  */
-import { api } from './api.js';
-import { CameraManager } from './camera.js';
-import { Config } from './config.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { api } from './api.js?v=3.0.0';
+import { CameraManager } from './camera.js?v=3.0.0';
+import { Config } from './config.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 const camera = new CameraManager();
 let currentSelfieBlob = null;

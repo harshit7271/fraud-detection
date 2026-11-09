@@ -2,7 +2,7 @@
  * FACEGUARD AI - Centralized HTTP API Client
  * Wraps Fetch API with request timeouts, tenant auth injection, self-healing recovery, and error handling.
  */
-import { Config } from './config.js';
+import { Config } from './config.js?v=3.0.0';
 
 export class ApiClient {
   constructor(timeoutMs = 15000) {

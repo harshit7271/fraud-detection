@@ -2,6 +2,19 @@
  * FACEGUARD AI - Client Configuration & Defaults
  * Non-sensitive client runtime preferences.
  */
+
+// Immediately clear any legacy tenant storage on module initialization
+try {
+  const kId = localStorage.getItem('faceguard_tenant_id');
+  const kKey = localStorage.getItem('faceguard_tenant_key');
+  if (kId && (kId.toLowerCase().includes('alorica') || kId.toLowerCase().includes('sagility') || kId.toLowerCase().includes('mastek'))) {
+    localStorage.removeItem('faceguard_tenant_id');
+  }
+  if (kKey && (kKey.toLowerCase().includes('alorica') || kKey.toLowerCase().includes('sagility') || kKey.toLowerCase().includes('mastek'))) {
+    localStorage.removeItem('faceguard_tenant_key');
+  }
+} catch (e) {}
+
 export const Config = {
   // Base URL for the FastAPI Backend API
   getApiBaseUrl() {
@@ -29,14 +42,8 @@ export const Config = {
   // Active Tenant Authentication Key
   getTenantKey() {
     const key = localStorage.getItem('faceguard_tenant_key');
-    if (!key || key === 'alorica-live-key-2026' || key === 'alorica-test' || key === 'default' || key.trim() === '') {
+    if (!key || key.toLowerCase().includes('alorica') || key.toLowerCase().includes('sagility') || key.toLowerCase().includes('mastek') || key === 'default' || key.trim() === '') {
       return 'enterprise-a-key-2026';
-    }
-    if (key === 'sagility-live-key-2026' || key === 'sagility-test') {
-      return 'enterprise-b-key-2026';
-    }
-    if (key === 'mastek-live-key-2026' || key === 'mastek-test') {
-      return 'enterprise-c-key-2026';
     }
     return key.trim();
   },
@@ -48,16 +55,17 @@ export const Config = {
   // Active Tenant ID / Slug
   getTenantId() {
     const id = localStorage.getItem('faceguard_tenant_id');
-    if (!id || id === 'alorica' || id === 'alorica-test') return 'enterprise-a';
-    if (id === 'sagility' || id === 'sagility-test') return 'enterprise-b';
-    if (id === 'mastek' || id === 'mastek-test') return 'enterprise-c';
+    if (!id || id.toLowerCase().includes('alorica') || id.toLowerCase().includes('sagility') || id.toLowerCase().includes('mastek') || id === 'default' || id.trim() === '') {
+      return 'enterprise-a';
+    }
     return id.trim();
   },
   setTenantId(id) {
     if (id) {
-      const sanitized = (id === 'alorica' || id === 'alorica-test') ? 'enterprise-a' :
-                        (id === 'sagility' || id === 'sagility-test') ? 'enterprise-b' :
-                        (id === 'mastek' || id === 'mastek-test') ? 'enterprise-c' : id.trim();
+      const lower = id.toLowerCase();
+      const sanitized = lower.includes('alorica') ? 'enterprise-a' :
+                        lower.includes('sagility') ? 'enterprise-b' :
+                        lower.includes('mastek') ? 'enterprise-c' : id.trim();
       localStorage.setItem('faceguard_tenant_id', sanitized);
     } else {
       localStorage.removeItem('faceguard_tenant_id');

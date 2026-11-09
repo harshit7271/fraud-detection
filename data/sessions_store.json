@@ -2977,6 +2977,48 @@
           ]
         },
         "created_at": "2026-11-09T19:01:12.098774Z"
+      },
+      {
+        "event_id": "ebceb0d6-3b6f-4441-9e13-40ea39e74a6c",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "enterprise-a",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794255919673,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 0.7888053384839752,
+          "brightness_score": 4.615234375,
+          "contrast_score": 1.3874820559146075,
+          "issues": [
+            "Image is blurry (blur score 0.8 < 25.0)",
+            "Image is underexposed/dark (brightness 4.6 < 25.0)",
+            "Image has low contrast (contrast score 1.4 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T20:25:19.858888Z"
+      },
+      {
+        "event_id": "a525abd9-2d2e-421b-a90e-e67dfb0ae7da",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "enterprise-a",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794255925271,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 0.49572482600741913,
+          "brightness_score": 4.702176649305556,
+          "contrast_score": 0.9822509235328486,
+          "issues": [
+            "Image is blurry (blur score 0.5 < 25.0)",
+            "Image is underexposed/dark (brightness 4.7 < 25.0)",
+            "Image has low contrast (contrast score 1.0 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T20:25:25.342346Z"
       }
     ]
   }

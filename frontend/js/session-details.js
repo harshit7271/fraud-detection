@@ -2,8 +2,8 @@
  * FACEGUARD AI - Forensic Session Details & Audit Controller
  * Displays complete fraud assessment, confirmed event breakdown, Matplotlib chart, and JSON export.
  */
-import { api } from './api.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { api } from './api.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 let activeSessionId = null;
 let currentReportData = null;
@@ -11,7 +11,16 @@ let allConfirmedEvents = [];
 
 function setElText(id, val) {
   const el = document.getElementById(id);
-  if (el) el.textContent = val;
+  if (el) el.textContent = (val !== undefined && val !== null) ? val : '—';
+}
+
+function formatTenantDisplay(tenantId) {
+  if (!tenantId) return 'Enterprise A';
+  const lower = String(tenantId).toLowerCase();
+  if (lower.includes('alorica') || lower.includes('enterprise-a')) return 'Enterprise A';
+  if (lower.includes('sagility') || lower.includes('enterprise-b')) return 'Enterprise B';
+  if (lower.includes('mastek') || lower.includes('enterprise-c')) return 'Enterprise C';
+  return tenantId;
 }
 
 async function initSessionDetails() {
@@ -90,13 +99,13 @@ async function loadSessionAnalysis(sessionId) {
     setElText('detailSessionId', session.session_id || '—');
     setElText('detailCandidateId', session.candidate_id || '—');
     setElText('detailInterviewId', session.interview_id || '—');
-    setElText('detailTenantId', session.tenant_id || '—');
+    setElText('detailTenantId', formatTenantDisplay(session.tenant_id));
     setElText('detailStatus', session.status || 'ACTIVE');
 
-    // Populate Risk Assessment
-    const risk = report.risk_assessment;
-    const score = risk ? risk.risk_score : 0.0;
-    const level = risk ? risk.risk_level : 'LOW';
+    // Populate Risk Assessment safely
+    const risk = (report && report.risk_assessment) || {};
+    const score = typeof risk.risk_score === 'number' ? risk.risk_score : 0.0;
+    const level = risk.risk_level || 'LOW';
 
     setElText('detailRiskScore', score.toFixed(1));
 
@@ -125,7 +134,7 @@ async function loadSessionAnalysis(sessionId) {
     setElText('detailRecommendation', recText);
 
     // Confirmed Events
-    allConfirmedEvents = report.confirmed_events || [];
+    allConfirmedEvents = (report && report.confirmed_events) || [];
 
     // Counters
     setElText('detailTotalEvents', allConfirmedEvents.length);
@@ -206,7 +215,17 @@ async function loadForensicChart(sessionId) {
   const chartImg = document.getElementById('detailChartImg');
   const chartSpinner = document.getElementById('detailChartSpinner');
 
+  if (!sessionId) {
+    if (chartSpinner) {
+      chartSpinner.innerHTML = '<span class="text-xs font-mono text-zinc-500">No session selected for forensic chart.</span>';
+    }
+    return;
+  }
+
   try {
+    if (chartSpinner) chartSpinner.classList.remove('hidden');
+    if (chartImg) chartImg.classList.add('hidden');
+
     const res = await api.fetchWithTimeout(api.buildUrl(`/fraud/sessions/${sessionId}/analytics/chart`), {
       headers: api.getHeaders(),
     });
@@ -222,8 +241,9 @@ async function loadForensicChart(sessionId) {
   } catch (err) {
     console.error('Forensic chart rendering error:', err);
     if (chartSpinner) {
+      chartSpinner.classList.remove('hidden');
       chartSpinner.innerHTML = `
-        <span class="text-xs font-mono text-zinc-500">Forensic Trajectory graphic not available for this session (${err.message})</span>
+        <span class="text-xs font-mono text-zinc-500">Forensic Trajectory graphic not available (${err.message})</span>
       `;
     }
   }

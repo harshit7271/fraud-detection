@@ -2,8 +2,8 @@
  * FACEGUARD AI - Dashboard Controller
  * Connects to live backend APIs to display real session metrics and system health.
  */
-import { api } from './api.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { api } from './api.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 let allDashboardSessions = [];
 let dashboardCurrentPage = 1;

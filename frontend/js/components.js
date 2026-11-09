@@ -3,8 +3,8 @@
  * Responsive sidebar navigation (mobile drawer + desktop pinned), top header with hamburger toggle,
  * status widgets, and toast notifications.
  */
-import { Config } from './config.js';
-import { api } from './api.js';
+import { Config } from './config.js?v=3.0.0';
+import { api } from './api.js?v=3.0.0';
 
 export function openSidebar() {
   const sidebar = document.getElementById('appSidebar');
@@ -107,6 +107,10 @@ export function renderNavigation(activePage = 'dashboard') {
     `;
   }).join('');
 
+  const currentTenantId = Config.getTenantId();
+  const matchedTenant = Config.AVAILABLE_TENANTS.find(t => t.id === currentTenantId);
+  const activeTenantDisplayName = matchedTenant ? matchedTenant.name : (currentTenantId === 'enterprise-a' ? 'Enterprise A' : currentTenantId);
+
   sidebarContainer.innerHTML = `
     <!-- Mobile Backdrop Overlay -->
     <div id="sidebarBackdrop" class="fixed inset-0 bg-zinc-900/60 backdrop-blur-xs z-40 hidden transition-opacity duration-300 opacity-0 lg:hidden"></div>
@@ -154,7 +158,7 @@ export function renderNavigation(activePage = 'dashboard') {
           </div>
           <div class="flex justify-between items-center text-zinc-600">
             <span>Active Tenant:</span>
-            <span id="activeTenantBadge" class="text-zinc-900 font-semibold truncate max-w-[85px]">${Config.getTenantId()}</span>
+            <span id="activeTenantBadge" class="text-zinc-900 font-semibold truncate max-w-[95px]">${activeTenantDisplayName}</span>
           </div>
         </div>
       </div>
@@ -248,6 +252,10 @@ export function renderHeader(title = 'Dashboard', subtitle = '') {
       const key = selected.dataset.key;
       Config.setTenantId(e.target.value);
       Config.setTenantKey(key);
+      const activeTenantBadge = document.getElementById('activeTenantBadge');
+      if (activeTenantBadge) {
+        activeTenantBadge.textContent = selected.text;
+      }
       showToast(`Switched active tenant to ${selected.text}`, 'info');
       window.dispatchEvent(new CustomEvent('tenantChanged', { detail: { tenantId: e.target.value, tenantKey: key } }));
     });

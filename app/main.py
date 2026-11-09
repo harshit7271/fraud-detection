@@ -47,6 +47,34 @@ def create_application() -> FastAPI:
         allow_headers=["*"],
     )
 
+    # Cache Buster / No-Cache Middleware for Static Assets and HTML Views
+    @app.middleware("http")
+    async def add_no_cache_headers(request, call_next):
+        response = await call_next(request)
+        ctype = response.headers.get("content-type", "")
+        path = request.url.path
+        if (
+            "html" in ctype
+            or "javascript" in ctype
+            or "css" in ctype
+            or path.endswith((".html", ".js", ".css"))
+            or path in (
+                "/",
+                "/ui",
+                "/index.html",
+                "/register",
+                "/monitor",
+                "/history",
+                "/session-details",
+                "/settings",
+                "/performance-report",
+            )
+        ):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, max-age=0"
+            response.headers["Pragma"] = "no-cache"
+            response.headers["Expires"] = "0"
+        return response
+
     # Security exception handlers
     register_exception_handlers(app)
 

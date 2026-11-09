@@ -2,10 +2,10 @@
  * FACEGUARD AI - Live Interview Proctoring Controller
  * Real-time webcam frame batching, non-overlapping fetch loop, HUD overlay, mismatch counters, and fraud warning banners.
  */
-import { api } from './api.js';
-import { CameraManager } from './camera.js';
-import { Config } from './config.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { api } from './api.js?v=3.0.0';
+import { CameraManager } from './camera.js?v=3.0.0';
+import { Config } from './config.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 const camera = new CameraManager();
 

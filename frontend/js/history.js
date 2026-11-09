@@ -2,14 +2,23 @@
  * FACEGUARD AI - Session History Controller
  * Searchable, filterable table for audit trail and compliance verification.
  */
-import { api } from './api.js';
-import { Config } from './config.js';
-import { renderNavigation, renderHeader, showToast } from './components.js';
+import { api } from './api.js?v=3.0.0';
+import { Config } from './config.js?v=3.0.0';
+import { renderNavigation, renderHeader, showToast } from './components.js?v=3.0.0';
 
 let allSessions = [];
 let currentFilteredSessions = [];
 let historyCurrentPage = 1;
 const HISTORY_PAGE_SIZE = 10;
+
+function formatTenantDisplay(tenantId) {
+  if (!tenantId) return 'Enterprise A';
+  const lower = String(tenantId).toLowerCase();
+  if (lower.includes('alorica') || lower.includes('enterprise-a')) return 'Enterprise A';
+  if (lower.includes('sagility') || lower.includes('enterprise-b')) return 'Enterprise B';
+  if (lower.includes('mastek') || lower.includes('enterprise-c')) return 'Enterprise C';
+  return tenantId;
+}
 
 async function initHistory() {
   renderNavigation('history');
@@ -169,7 +178,7 @@ function renderHistoryPage(page) {
       </td>
       <td class="py-3 px-4 text-zinc-950 font-bold">${s.candidate_id}</td>
       <td class="py-3 px-4 text-zinc-700 font-medium">${s.interview_id}</td>
-      <td class="py-3 px-4 text-zinc-800 font-medium">${s.tenant_id}</td>
+      <td class="py-3 px-4 text-zinc-800 font-medium">${formatTenantDisplay(s.tenant_id)}</td>
       <td class="py-3 px-4">
         <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-100 text-zinc-800 border border-zinc-200">
           ${s.status}
