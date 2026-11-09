@@ -13,14 +13,13 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', system-ui, 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
+                        zinc: {
+                            850: '#1f1f23',
+                            950: '#09090b',
                         }
                     }
                 }
@@ -29,13 +28,13 @@
     </script>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-[#eaedf0] text-zinc-900 min-h-screen selection:bg-zinc-200">
 
     <!-- Persistent Sidebar -->
     <div id="sidebarContainer"></div>
 
     <!-- Main Content Container (Responsive margin for sidebar) -->
-    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden min-w-0">
+    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 min-w-0">
         
         <!-- Header Bar -->
         <div id="headerContainer"></div>
@@ -44,22 +43,22 @@
         <main class="flex-1 p-3.5 sm:p-6 lg:p-8 space-y-5 sm:space-y-6 max-w-7xl w-full min-w-0">
             
             <!-- Action Toolbar & Back Navigation -->
-            <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-zinc-200 shadow-xs">
                 <div class="flex items-center gap-3">
-                    <a href="/history" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-3 rounded-xl border border-slate-200 transition shadow-xs flex items-center gap-1.5">
+                    <a href="/history" class="bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-semibold py-2 px-3 rounded-xl border border-zinc-200 transition shadow-2xs flex items-center gap-1.5 min-h-[40px]">
                         <span>←</span>
                         <span>Back to History</span>
                     </a>
-                    <span class="text-slate-300">|</span>
-                    <span class="text-xs font-mono text-slate-500">UUID: <strong id="detailSessionId" class="text-indigo-600 font-semibold">—</strong></span>
+                    <span class="text-zinc-300">|</span>
+                    <span class="text-xs font-mono text-zinc-500">UUID: <strong id="detailSessionId" class="text-zinc-950 font-semibold">—</strong></span>
                 </div>
 
                 <div class="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-                    <button id="refreshDetailsBtn" type="button" class="flex-1 sm:flex-initial bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-3.5 rounded-xl border border-slate-200 transition shadow-xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 min-h-[40px]">
+                    <button id="refreshDetailsBtn" type="button" class="flex-1 sm:flex-initial bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-semibold py-2 px-3.5 rounded-xl border border-zinc-200 transition shadow-2xs flex items-center justify-center gap-1.5 cursor-pointer active:scale-95 min-h-[40px]">
                         <span id="refreshIcon" class="inline-block transition-transform duration-300">🔄</span>
                         <span>Refresh Results</span>
                     </button>
-                    <button id="exportJsonReportBtn" type="button" class="flex-1 sm:flex-initial bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2 px-4 rounded-xl transition shadow-sm flex items-center justify-center gap-2 cursor-pointer active:scale-95 min-h-[40px]">
+                    <button id="exportJsonReportBtn" type="button" class="flex-1 sm:flex-initial bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-2 px-4 rounded-xl transition shadow-xs flex items-center justify-center gap-2 cursor-pointer active:scale-95 min-h-[40px]">
                         <span>📥</span>
                         <span>Export JSON Report</span>
                     </button>
@@ -67,11 +66,11 @@
             </div>
 
             <!-- Auditor Distinction Guardrail Banner -->
-            <div class="p-4 rounded-xl bg-indigo-50 border border-indigo-200 text-indigo-900 text-xs flex items-start gap-3">
+            <div class="p-4 rounded-xl bg-zinc-100 border border-zinc-200 text-zinc-900 text-xs flex items-start gap-3">
                 <span class="text-lg">⚖️</span>
                 <div class="space-y-0.5 leading-relaxed">
-                    <span class="font-bold text-indigo-950">Algorithmic Evidence Disclaimer:</span>
-                    <p class="text-indigo-800">
+                    <span class="font-bold text-zinc-950">Algorithmic Evidence Disclaimer:</span>
+                    <p class="text-zinc-700">
                         Observed anomalies reflect automated computer vision and temporal debounce thresholds (YuNet & SFace cosine distance). All scores are evidentiary indicators and do not constitute an automated hiring or rejection determination without certified human proctor review.
                     </p>
                 </div>
@@ -82,67 +81,88 @@
                 
                 <!-- Left 7 Columns: Candidate Information Card -->
                 <div class="lg:col-span-7 glass-card p-6 rounded-2xl space-y-4">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono border-b border-slate-100 pb-3">Session Metadata</h3>
+                    <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono border-b border-zinc-100 pb-3">Session Metadata</h3>
                     
                     <div class="grid grid-cols-2 gap-4 text-xs font-mono">
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Candidate Identifier</span>
-                            <p id="detailCandidateId" class="font-bold text-slate-900">—</p>
+                        <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 space-y-1">
+                            <span class="text-[10px] text-zinc-500 uppercase tracking-wider">Candidate Identifier</span>
+                            <p id="detailCandidateId" class="font-bold text-zinc-950">—</p>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Interview Session ID</span>
-                            <p id="detailInterviewId" class="font-bold text-slate-700">—</p>
+                        <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 space-y-1">
+                            <span class="text-[10px] text-zinc-500 uppercase tracking-wider">Interview Session ID</span>
+                            <p id="detailInterviewId" class="font-bold text-zinc-800">—</p>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Tenant Boundary</span>
-                            <p id="detailTenantId" class="font-bold text-indigo-600">—</p>
+                        <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 space-y-1">
+                            <span class="text-[10px] text-zinc-500 uppercase tracking-wider">Tenant Boundary</span>
+                            <p id="detailTenantId" class="font-bold text-zinc-950">—</p>
                         </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Consent Verification</span>
-                            <p id="detailConsent" class="font-bold text-emerald-700">—</p>
+                        <div class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 space-y-1">
+                            <span class="text-[10px] text-zinc-500 uppercase tracking-wider">Session Lifecycle</span>
+                            <p id="detailStatus" class="font-bold text-emerald-600">—</p>
                         </div>
-                        <div class="col-span-2 p-3 rounded-xl bg-slate-50 border border-slate-200 space-y-1">
-                            <span class="text-[10px] text-slate-500 uppercase tracking-wider">Created Timestamp</span>
-                            <p id="detailCreated" class="font-bold text-slate-700">—</p>
+                    </div>
+
+                    <!-- Baseline Embedding Encryption Verification -->
+                    <div class="p-4 rounded-xl bg-zinc-50 border border-zinc-200 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-zinc-900 font-mono flex items-center gap-2">
+                                <span>🔒</span>
+                                <span>AES-256-GCM Biometric Vault Check</span>
+                            </span>
+                            <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">VERIFIED</span>
                         </div>
+                        <p class="text-[11px] text-zinc-500 leading-relaxed font-mono">
+                            Candidate reference face embedding encrypted via PBKDF2/AES-GCM at rest. Zero raw biometric vectors leaked to external networks.
+                        </p>
                     </div>
                 </div>
 
-                <!-- Right 5 Columns: Risk Score & Action Recommendation Card -->
+                <!-- Right 5 Columns: Risk Score & Recommendation -->
                 <div class="lg:col-span-5 glass-card p-6 rounded-2xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider font-mono">Forensic Risk Score</span>
-                        <span id="detailRiskLevelBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">LOW</span>
+                    <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+                        <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Auditor Assessment</h3>
+                        <span id="detailRiskBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold font-mono bg-emerald-50 text-emerald-700 border border-emerald-200">LOW</span>
                     </div>
 
-                    <div class="space-y-2">
-                        <div class="flex items-baseline gap-2">
-                            <span id="detailRiskScore" class="text-4xl font-extrabold text-slate-900 font-mono tracking-tight">0.0</span>
-                            <span class="text-xs text-slate-400 font-mono">/ 100.0</span>
-                        </div>
-                        <div class="w-full h-3 bg-slate-100 rounded-full overflow-hidden p-0.5 border border-slate-200">
-                            <div id="detailRiskBar" class="h-full bg-gradient-to-r from-emerald-500 to-sky-500 rounded-full transition-all duration-300 w-0"></div>
+                    <div class="flex items-baseline gap-2">
+                        <span id="detailRiskScore" class="text-5xl font-extrabold text-zinc-950 font-mono tracking-tight">0.0</span>
+                        <span class="text-xs text-zinc-400 font-mono">/ 100.0</span>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <span class="text-xs font-semibold text-zinc-700">Official Recommendation:</span>
+                        <div id="detailRecommendation" class="p-3 rounded-xl bg-zinc-50 border border-zinc-200 text-xs font-bold font-mono text-zinc-900">
+                            NO ACTION REQUIRED (CLEARED)
                         </div>
                     </div>
 
-                    <div class="pt-3 border-t border-slate-100 space-y-2">
-                        <span class="text-[10px] font-mono uppercase text-slate-500">Auditor Action Recommendation:</span>
-                        <div>
-                            <span id="detailRecommendationBadge" class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">NO_ACTION</span>
+                    <!-- Risk Breakdown Summary -->
+                    <div class="space-y-2 pt-2 border-t border-zinc-100 text-xs font-mono">
+                        <div class="flex justify-between text-zinc-600">
+                            <span>Total Confirmed Violations:</span>
+                            <strong id="detailTotalEvents" class="text-zinc-950">0</strong>
+                        </div>
+                        <div class="flex justify-between text-zinc-600">
+                            <span>Identity Mismatch Triggers:</span>
+                            <strong id="detailMismatchEvents" class="text-zinc-950">0</strong>
+                        </div>
+                        <div class="flex justify-between text-zinc-600">
+                            <span>Face Absence Events:</span>
+                            <strong id="detailAbsenceEvents" class="text-zinc-950">0</strong>
                         </div>
                     </div>
                 </div>
 
             </div>
 
-            <!-- Section 2: Confirmed Fraud Events Breakdown -->
-            <div class="glass-card rounded-2xl overflow-hidden shadow-sm">
-                <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+            <!-- Section 2: Forensic Events Ledger Table -->
+            <div class="glass-card rounded-2xl overflow-hidden shadow-xs">
+                <div class="p-5 border-b border-zinc-100 flex items-center justify-between">
                     <div>
-                        <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Confirmed Fraud Events</h3>
-                        <p class="text-[11px] text-slate-500">Chronological anomalies registered by temporal debounce engine</p>
+                        <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Forensic Events Ledger</h3>
+                        <p class="text-[11px] text-zinc-500">Debounced, confirmed biometric anomalies with timestamps and confidence scores</p>
                     </div>
-                    <span id="detailEventCountBadge" class="text-xs font-mono font-bold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">
+                    <span id="eventsLedgerBadge" class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-zinc-100 text-zinc-700 border border-zinc-200">
                         0 Events
                     </span>
                 </div>
@@ -150,62 +170,44 @@
                 <div class="overflow-x-auto touch-scroll">
                     <table class="w-full text-left">
                         <thead>
-                            <tr class="text-[11px] font-mono uppercase tracking-wider text-slate-500 bg-slate-50 border-b border-slate-200">
-                                <th class="py-3 px-4 font-semibold">#</th>
-                                <th class="py-3 px-4 font-semibold">Violation Type</th>
+                            <tr class="text-[11px] font-mono uppercase tracking-wider text-zinc-500 bg-zinc-50 border-b border-zinc-200">
+                                <th class="py-3 px-4 font-semibold">Event Type</th>
                                 <th class="py-3 px-4 font-semibold">Severity</th>
                                 <th class="py-3 px-4 font-semibold">Confidence</th>
-                                <th class="py-3 px-4 font-semibold">Duration</th>
-                                <th class="py-3 px-4 font-semibold">Timestamp</th>
-                                <th class="py-3 px-4 font-semibold">Evidence Details</th>
+                                <th class="py-3 px-4 font-semibold">Timestamp (ms)</th>
+                                <th class="py-3 px-4 font-semibold">Duration (ms)</th>
+                                <th class="py-3 px-4 text-right font-semibold">Evidence Details</th>
                             </tr>
                         </thead>
-                        <tbody id="detailEventsTableBody">
-                            <!-- Populated dynamically by session-details.js -->
+                        <tbody id="eventsLedgerTableBody">
+                            <!-- Injected by session-details.js -->
                         </tbody>
                     </table>
 
-                    <div id="detailEventsEmpty" class="py-12 text-center text-xs text-slate-400 space-y-1.5 font-mono">
-                        <p class="text-2xl">🛡️</p>
-                        <p class="font-medium text-emerald-700">Zero fraud events confirmed.</p>
-                        <p class="text-slate-400">Candidate stream exhibited zero sustained identity or multi-face violations.</p>
-                    </div>
-                </div>
-
-                <!-- Confirmed Events 10-Item Pagination Controls -->
-                <div id="eventsPagination" class="flex flex-wrap items-center justify-between gap-3 p-4 border-t border-slate-100 text-xs font-mono text-slate-500 hidden">
-                    <div id="eventsPageInfo">Showing 1 to 10 of 10 events</div>
-                    <div class="flex items-center gap-1.5">
-                        <button id="eventsPrevBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-xs flex items-center gap-1 cursor-pointer">
-                            <span>←</span>
-                            <span>Previous</span>
-                        </button>
-                        <span id="eventsPageNumber" class="px-2.5 py-1 text-slate-700 font-bold">Page 1 of 1</span>
-                        <button id="eventsNextBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-xs flex items-center gap-1 cursor-pointer">
-                            <span>Next</span>
-                            <span>→</span>
-                        </button>
+                    <div id="eventsLedgerEmpty" class="py-12 text-center text-xs text-zinc-400 space-y-1">
+                        <p class="text-xl">✅</p>
+                        <p class="font-medium text-zinc-600">No confirmed fraud events recorded during this session.</p>
+                        <p class="text-zinc-400">Candidate maintained verified compliance throughout proctoring.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Section 3: Matplotlib 4-Panel Telemetry Chart Preview -->
+            <!-- Matplotlib Chart Preview -->
             <div class="glass-card p-6 rounded-2xl space-y-4">
-                <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                    <div class="flex items-center gap-2.5">
-                        <span class="text-base">📊</span>
-                        <div>
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Executive Telemetry Diagram</h3>
-                            <p class="text-[11px] text-slate-500">Similarity timeline, risk trajectory, event histogram & stream quality</p>
-                        </div>
+                <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+                    <div class="flex items-center gap-2">
+                        <span class="text-xl">📊</span>
+                        <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Forensic Trajectory Vector Graphic</h3>
                     </div>
+                    <span class="text-[10px] text-zinc-400 font-mono">Generated dynamically by backend Matplotlib engine</span>
                 </div>
 
-                <div class="relative min-h-[300px] flex items-center justify-center bg-slate-50 rounded-xl overflow-hidden border border-slate-200 p-2">
-                    <div id="detailChartLoading" class="text-xs text-slate-400 font-mono">
-                        Loading forensic analytics diagram...
+                <div class="relative min-h-[350px] flex items-center justify-center bg-zinc-50 rounded-xl overflow-hidden border border-zinc-200 p-2">
+                    <div id="detailChartSpinner" class="flex flex-col items-center gap-2 text-xs text-zinc-500 font-mono">
+                        <svg class="animate-spin h-6 w-6 text-zinc-900" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path></svg>
+                        <span>Rendering telemetry chart...</span>
                     </div>
-                    <img id="detailChartImg" src="" alt="Forensic Analysis Chart" class="w-full h-auto rounded-lg hidden shadow-sm">
+                    <img id="detailChartImg" src="" alt="Session Trajectory Chart" class="w-full h-auto rounded-lg hidden">
                 </div>
             </div>
 

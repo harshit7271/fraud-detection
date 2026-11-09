@@ -13,14 +13,13 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', system-ui, 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
+                        zinc: {
+                            850: '#1f1f23',
+                            950: '#09090b',
                         }
                     }
                 }
@@ -29,13 +28,13 @@
     </script>
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-[#eaedf0] text-zinc-900 min-h-screen selection:bg-zinc-200">
 
     <!-- Persistent Sidebar -->
     <div id="sidebarContainer"></div>
 
     <!-- Main Content Container (Responsive margin for sidebar) -->
-    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden min-w-0">
+    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 min-w-0">
         
         <!-- Header Bar -->
         <div id="headerContainer"></div>
@@ -47,94 +46,77 @@
                 
                 <!-- Card 1: Backend API Connectivity -->
                 <div class="glass-card p-6 rounded-2xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
                         <div class="flex items-center gap-2.5">
                             <span class="text-base">🌐</span>
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Backend API Connectivity</h3>
+                            <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Backend API Connectivity</h3>
                         </div>
-                        <span class="text-[10px] text-slate-400 font-mono">FastAPI Endpoints</span>
+                        <span class="text-[10px] text-zinc-400 font-mono">FastAPI Endpoints</span>
                     </div>
 
                     <div class="space-y-3">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">API Base URL</label>
-                            <input id="settingApiUrl" type="text" placeholder="http://localhost:8000/api/v1" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition">
-                            <p class="text-[11px] text-slate-500 mt-1">Default points to current window origin (`/api/v1`).</p>
-                        </div>
-
-                        <div class="flex items-center justify-between pt-2">
-                            <button id="testConnectionBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2 px-4 rounded-xl border border-slate-200 transition shadow-xs flex items-center gap-2">
-                                <span>⚡</span>
-                                <span>Test Backend Connection</span>
-                            </button>
-                            <span id="connectionTestResult" class="text-xs font-mono text-slate-500"></span>
+                            <label class="block text-xs font-semibold text-zinc-700 mb-1.5">API Base URL</label>
+                            <input id="settingApiUrl" type="text" placeholder="http://localhost:8000/api/v1" class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-zinc-900 focus:outline-none focus:border-zinc-400 focus:bg-white transition min-h-[42px]">
+                            <p class="text-[11px] text-zinc-500 mt-1">Default points to current window origin (`/api/v1`).</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 2: Frame Capture & Video Telemetry -->
+                <!-- Card 2: Tenant Isolation & Secrets -->
                 <div class="glass-card p-6 rounded-2xl space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                    <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
+                        <div class="flex items-center gap-2.5">
+                            <span class="text-base">🏢</span>
+                            <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Tenant Boundary Configuration</h3>
+                        </div>
+                        <span class="text-[10px] text-zinc-400 font-mono">Multi-Tenant Vault</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-zinc-700 mb-1.5">Active Tenant Slug</label>
+                            <input id="settingTenantId" type="text" placeholder="alorica" class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-zinc-900 focus:outline-none focus:border-zinc-400 focus:bg-white transition min-h-[42px]">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-zinc-700 mb-1.5">Tenant API Key</label>
+                            <input id="settingTenantKey" type="password" placeholder="••••••••••••••••" class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-zinc-900 focus:outline-none focus:border-zinc-400 focus:bg-white transition min-h-[42px]">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Video Streaming & Sampling Cadence -->
+                <div class="glass-card p-6 rounded-2xl space-y-4">
+                    <div class="flex items-center justify-between border-b border-zinc-100 pb-3">
                         <div class="flex items-center gap-2.5">
                             <span class="text-base">📹</span>
-                            <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Camera & Frame Capture</h3>
+                            <h3 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Camera Frame Sampling Policy</h3>
                         </div>
-                        <span class="text-[10px] text-slate-400 font-mono">Client-Side Sampling</span>
+                        <span class="text-[10px] text-zinc-400 font-mono">Inference Optimization</span>
                     </div>
 
-                    <div class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">Preferred Camera Source</label>
-                            <select id="settingCameraSelect" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition cursor-pointer">
-                                <option value="">Detecting available devices...</option>
-                            </select>
+                            <label class="block text-xs font-semibold text-zinc-700 mb-1.5">Capture Sampling Cadence (ms)</label>
+                            <input id="settingSamplingMs" type="number" min="300" max="3000" step="100" placeholder="800" class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-zinc-900 focus:outline-none focus:border-zinc-400 focus:bg-white transition min-h-[42px]">
+                            <p class="text-[11px] text-zinc-500 mt-1">Recommended: 600ms - 1000ms for optimal balance.</p>
                         </div>
-
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-xs font-semibold text-slate-700 mb-1.5">Sampling Cadence (ms)</label>
-                                <input id="settingSampling" type="number" min="300" max="3000" step="100" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-slate-900 focus:outline-none focus:border-indigo-500 focus:bg-white transition">
-                                <p class="text-[11px] text-slate-500 mt-1">Recommended: 800ms for optimal balance of frame telemetry and network throughput.</p>
-                            </div>
-
-                            <div>
-                                <div class="flex justify-between items-center mb-1.5">
-                                    <label class="text-xs font-semibold text-slate-700">JPEG Compression Quality</label>
-                                    <span id="jpegQualityDisplay" class="text-xs font-mono text-indigo-600 font-bold">85%</span>
-                                </div>
-                                <input id="settingJpegQuality" type="range" min="50" max="95" step="5" class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-indigo-600">
-                                <p class="text-[11px] text-slate-500 mt-1">Higher quality increases facial landmark clarity; lower quality reduces bandwidth.</p>
-                            </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-zinc-700 mb-1.5">JPEG Compression Quality</label>
+                            <input id="settingQuality" type="number" min="0.5" max="1.0" step="0.05" placeholder="0.85" class="w-full bg-zinc-50 border border-zinc-200 rounded-xl px-3.5 py-2.5 text-xs font-mono text-zinc-900 focus:outline-none focus:border-zinc-400 focus:bg-white transition min-h-[42px]">
+                            <p class="text-[11px] text-zinc-500 mt-1">Default 0.85 delivers high visual fidelity at &lt;50KB/frame.</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Card 3: Security & Privacy Compliance Architecture -->
-                <div class="glass-card p-6 rounded-2xl space-y-3">
-                    <h3 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono border-b border-slate-100 pb-3">Zero-Trust Security & Privacy Policy</h3>
-                    <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
-                        <p class="flex items-start gap-2">
-                            <span class="text-emerald-600 font-bold">✓</span>
-                            <span><strong>No Biometric Storage in Browser:</strong> Raw webcam frames and biometric embedding representations are never stored in localStorage, cookies, or IndexedDB.</span>
-                        </p>
-                        <p class="flex items-start gap-2">
-                            <span class="text-emerald-600 font-bold">✓</span>
-                            <span><strong>Server-Side Cryptography:</strong> Reference facial vectors are encrypted server-side with AES-256-GCM using isolated tenant keys and salted initialization vectors.</span>
-                        </p>
-                        <p class="flex items-start gap-2">
-                            <span class="text-emerald-600 font-bold">✓</span>
-                            <span><strong>Camera Stream Termination:</strong> MediaTracks are strictly released upon page unload or manual pause to prevent unintended background surveillance.</span>
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Action Save / Reset Buttons -->
-                <div class="flex items-center justify-end gap-3 pt-2">
-                    <button id="resetSettingsBtn" class="bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold py-2.5 px-4 rounded-xl border border-slate-200 transition shadow-xs">
-                        Reset to Defaults
+                <!-- Save & Reset Action Controls -->
+                <div class="flex flex-wrap items-center justify-between gap-3 pt-2">
+                    <button id="resetDefaultsBtn" type="button" class="bg-white hover:bg-zinc-50 active:scale-95 text-zinc-700 text-xs font-semibold py-2.5 px-4 rounded-xl border border-zinc-200 transition shadow-2xs min-h-[42px] cursor-pointer">
+                        <span>↺ Reset to Defaults</span>
                     </button>
-                    <button id="saveSettingsBtn" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold py-2.5 px-6 rounded-xl transition shadow-sm">
-                        Save Preferences
+                    <button id="saveSettingsBtn" type="button" class="bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-white text-xs font-semibold py-2.5 px-6 rounded-xl transition shadow-xs flex items-center gap-2 min-h-[42px] cursor-pointer">
+                        <span>💾</span>
+                        <span>Save Preferences</span>
                     </button>
                 </div>
 

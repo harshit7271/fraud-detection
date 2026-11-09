@@ -141,7 +141,7 @@ function renderHistoryPage(page) {
 
   pageSessions.forEach(s => {
     const row = document.createElement('tr');
-    row.className = 'border-b border-slate-100 hover:bg-slate-50 transition cursor-pointer text-xs font-mono';
+    row.className = 'border-b border-zinc-100 hover:bg-zinc-50 transition cursor-pointer text-xs font-mono';
     row.onclick = () => {
       window.location.href = `/session-details?session_id=${s.session_id}`;
     };
@@ -164,14 +164,14 @@ function renderHistoryPage(page) {
     const createdDate = new Date(s.created_at).toLocaleString();
 
     row.innerHTML = `
-      <td class="py-3 px-4 font-mono font-semibold text-indigo-600 hover:text-indigo-800 truncate max-w-[130px]" title="${s.session_id}">
+      <td class="py-3 px-4 font-mono font-semibold text-zinc-600 hover:text-zinc-900 truncate max-w-[130px]" title="${s.session_id}">
         ${s.session_id.substring(0, 8)}...
       </td>
-      <td class="py-3 px-4 text-slate-900 font-bold">${s.candidate_id}</td>
-      <td class="py-3 px-4 text-slate-700 font-medium">${s.interview_id}</td>
-      <td class="py-3 px-4 text-indigo-700 font-medium">${s.tenant_id}</td>
+      <td class="py-3 px-4 text-zinc-950 font-bold">${s.candidate_id}</td>
+      <td class="py-3 px-4 text-zinc-700 font-medium">${s.interview_id}</td>
+      <td class="py-3 px-4 text-zinc-800 font-medium">${s.tenant_id}</td>
       <td class="py-3 px-4">
-        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider ${s.status === 'INITIALIZED' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700 border border-slate-200'}">
+        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wider bg-zinc-100 text-zinc-800 border border-zinc-200">
           ${s.status}
         </span>
       </td>
@@ -184,10 +184,10 @@ function renderHistoryPage(page) {
       <td class="py-3 px-4 font-bold ${level === 'CRITICAL' || level === 'HIGH' ? 'text-rose-700' : level === 'MEDIUM' ? 'text-amber-700' : 'text-emerald-700'}">
         ${level}
       </td>
-      <td class="py-3 px-4 text-slate-800 font-bold">${eventsCount}</td>
-      <td class="py-3 px-4 text-slate-600">${createdDate}</td>
+      <td class="py-3 px-4 text-zinc-900 font-bold">${eventsCount}</td>
+      <td class="py-3 px-4 text-zinc-600">${createdDate}</td>
       <td class="py-3 px-4 text-right">
-        <a href="/session-details?session_id=${s.session_id}" class="text-indigo-600 hover:text-indigo-700 font-semibold text-xs flex items-center justify-end gap-1">
+        <a href="/session-details?session_id=${s.session_id}" class="text-zinc-900 hover:text-black font-semibold text-xs flex items-center justify-end gap-1">
           <span>Details</span>
           <span>→</span>
         </a>

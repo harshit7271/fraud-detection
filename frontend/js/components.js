@@ -1,5 +1,5 @@
 /**
- * FACEGUARD AI - Reusable UI Components (Light Enterprise Theme)
+ * FACEGUARD AI - Reusable UI Components (Senior Enterprise Grayish + White Theme)
  * Responsive sidebar navigation (mobile drawer + desktop pinned), top header with hamburger toggle,
  * status widgets, and toast notifications.
  */
@@ -87,7 +87,7 @@ export function renderNavigation(activePage = 'dashboard') {
     },
     {
       id: 'performance',
-      label: 'Performance & Benchmarks',
+      label: 'Benchmarks & Load',
       icon: `<svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
       href: `/performance-report`,
     },
@@ -96,37 +96,37 @@ export function renderNavigation(activePage = 'dashboard') {
   const navHtml = navItems.map(item => {
     const isActive = item.id === activePage;
     const activeClasses = isActive
-      ? 'bg-indigo-50 text-indigo-700 border-indigo-200 font-semibold shadow-xs'
-      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70 border-transparent';
+      ? 'bg-zinc-900 text-white font-semibold shadow-xs'
+      : 'text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 font-medium';
 
     return `
-      <a href="${item.href}" class="nav-item flex items-center gap-3 px-3.5 py-3 rounded-xl border text-sm transition-all duration-150 ${activeClasses}">
-        <span class="${isActive ? 'text-indigo-600' : 'text-slate-400'}">${item.icon}</span>
-        <span class="truncate">${item.label}</span>
+      <a href="${item.href}" class="nav-item flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-xs sm:text-sm transition-all duration-150 ${activeClasses}">
+        <span class="${isActive ? 'text-white' : 'text-zinc-400'}">${item.icon}</span>
+        <span class="truncate flex-1">${item.label}</span>
       </a>
     `;
   }).join('');
 
   sidebarContainer.innerHTML = `
     <!-- Mobile Backdrop Overlay -->
-    <div id="sidebarBackdrop" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-40 hidden transition-opacity duration-300 opacity-0 lg:hidden"></div>
+    <div id="sidebarBackdrop" class="fixed inset-0 bg-zinc-900/60 backdrop-blur-xs z-40 hidden transition-opacity duration-300 opacity-0 lg:hidden"></div>
 
     <!-- Responsive Sidebar Drawer -->
-    <aside id="appSidebar" class="w-72 sm:w-64 h-full fixed top-0 left-0 bg-white border-r border-slate-200 flex flex-col justify-between p-5 z-50 select-none shadow-2xl lg:shadow-xs transition-transform duration-300 -translate-x-full lg:translate-x-0 overflow-y-auto">
+    <aside id="appSidebar" class="w-64 h-full fixed top-0 left-0 bg-white border-r border-zinc-200/90 flex flex-col justify-between p-4 sm:p-5 z-50 select-none shadow-xl lg:shadow-none transition-transform duration-300 -translate-x-full lg:translate-x-0 overflow-y-auto">
       <!-- Brand & Platform Header -->
       <div class="space-y-6">
         <div class="flex items-center justify-between px-1">
-          <div class="flex items-center gap-3">
-            <div class="w-9 h-9 rounded-xl p-1 bg-gradient-to-tr from-indigo-600 to-cyan-500 flex items-center justify-center shadow-md shadow-indigo-600/20 flex-shrink-0">
-              <img src="/static/assets/logo.svg" alt="FACEGUARD Logo" class="w-7 h-7" />
+          <div class="flex items-center gap-3 min-w-0">
+            <div class="w-9 h-9 rounded-xl p-1 bg-zinc-950 flex items-center justify-center shadow-xs border border-zinc-800 flex-shrink-0">
+              <img src="/static/assets/logo.svg" alt="FACEGUARD Logo" class="w-7 h-7 invert" />
             </div>
-            <div>
-              <h1 class="text-sm font-extrabold tracking-wider text-slate-900 uppercase font-mono">FACEGUARD AI</h1>
-              <p class="text-[10px] tracking-tight text-slate-500 font-medium">Fraud Detection Platform</p>
+            <div class="min-w-0 truncate">
+              <h1 class="text-xs font-extrabold tracking-wider text-zinc-950 uppercase font-mono truncate">FACEGUARD AI</h1>
+              <p class="text-[10px] tracking-tight text-zinc-500 font-medium truncate">Face Fraud Platform</p>
             </div>
           </div>
           <!-- Close Button for Mobile -->
-          <button id="sidebarCloseBtn" type="button" class="lg:hidden p-2 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 active:scale-95 transition cursor-pointer" aria-label="Close navigation">
+          <button id="sidebarCloseBtn" type="button" class="lg:hidden p-2 rounded-xl text-zinc-400 hover:text-zinc-700 hover:bg-zinc-100 active:scale-95 transition cursor-pointer min-w-[36px] min-h-[36px] flex items-center justify-center" aria-label="Close navigation">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
           </button>
         </div>
@@ -138,23 +138,23 @@ export function renderNavigation(activePage = 'dashboard') {
       </div>
 
       <!-- System Status Widget -->
-      <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5 mt-6">
+      <div class="p-3.5 rounded-2xl bg-zinc-50 border border-zinc-200 space-y-2.5 mt-6">
         <div class="flex items-center justify-between">
-          <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500 font-mono">System Status</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-500 font-mono">System Status</span>
           <span id="sysStatusPulse" class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
         </div>
         <div class="space-y-1.5 text-xs font-mono">
-          <div class="flex justify-between items-center text-slate-600">
-            <span>FastAPI Core:</span>
+          <div class="flex justify-between items-center text-zinc-600">
+            <span>FastAPI:</span>
             <span id="apiStatusBadge" class="text-emerald-600 font-semibold">CHECKING...</span>
           </div>
-          <div class="flex justify-between items-center text-slate-600">
-            <span>YuNet & SFace:</span>
+          <div class="flex justify-between items-center text-zinc-600">
+            <span>YuNet + SFace:</span>
             <span id="modelStatusBadge" class="text-emerald-600 font-semibold">CHECKING...</span>
           </div>
-          <div class="flex justify-between items-center text-slate-600">
+          <div class="flex justify-between items-center text-zinc-600">
             <span>Active Tenant:</span>
-            <span id="activeTenantBadge" class="text-indigo-600 font-semibold truncate max-w-[90px]">${Config.getTenantId()}</span>
+            <span id="activeTenantBadge" class="text-zinc-900 font-semibold truncate max-w-[85px]">${Config.getTenantId()}</span>
           </div>
         </div>
       </div>
@@ -201,32 +201,32 @@ export function renderHeader(title = 'Dashboard', subtitle = '') {
   `).join('');
 
   headerContainer.innerHTML = `
-    <header class="h-16 border-b border-slate-200 bg-white/90 backdrop-blur-xl px-4 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-xs">
-      <div class="flex items-center gap-3 min-w-0">
+    <header class="h-16 border-b border-zinc-200 bg-white px-3 sm:px-6 lg:px-8 flex items-center justify-between sticky top-0 z-30 shadow-2xs w-full">
+      <div class="flex items-center gap-2.5 sm:gap-3 min-w-0">
         <!-- Mobile Menu Toggle Button (Hamburger) -->
-        <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 -ml-1 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 active:scale-95 transition focus:outline-none cursor-pointer flex-shrink-0" aria-label="Open navigation menu">
+        <button id="mobileMenuBtn" type="button" class="lg:hidden p-2 rounded-xl text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 active:scale-95 transition focus:outline-none cursor-pointer flex-shrink-0 min-h-[40px] min-w-[40px] flex items-center justify-center" aria-label="Open navigation menu">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
         <div class="min-w-0">
-          <h2 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight truncate">${title}</h2>
-          ${subtitle ? `<p class="text-[11px] sm:text-xs text-slate-500 truncate hidden sm:block">${subtitle}</p>` : ''}
+          <h2 class="text-sm sm:text-base font-bold text-zinc-950 tracking-tight truncate">${title}</h2>
+          ${subtitle ? `<p class="text-[11px] sm:text-xs text-zinc-500 truncate hidden sm:block">${subtitle}</p>` : ''}
         </div>
       </div>
 
       <div class="flex items-center gap-2 sm:gap-3 flex-shrink-0">
         <!-- Enterprise Tenant Selector -->
-        <div class="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 sm:px-3 py-1.5 text-xs text-slate-600">
-          <span class="text-slate-400 font-mono text-[11px] hidden sm:inline">Tenant:</span>
-          <select id="tenantSelectHeader" class="bg-transparent text-slate-800 font-medium focus:outline-none cursor-pointer text-xs max-w-[110px] sm:max-w-none">
+        <div class="flex items-center gap-1.5 bg-zinc-100 border border-zinc-200/90 rounded-xl px-2.5 sm:px-3 py-1.5 text-xs text-zinc-700">
+          <span class="text-zinc-400 font-mono text-[11px] hidden sm:inline">Tenant:</span>
+          <select id="tenantSelectHeader" class="bg-transparent text-zinc-950 font-semibold focus:outline-none cursor-pointer text-xs max-w-[100px] sm:max-w-none">
             ${tenantOptions}
           </select>
         </div>
 
         <!-- Documentation Shortlink -->
-        <a href="https://harshit7271-faceguard-ai.hf.space/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-2.5 sm:px-3 py-1.5 rounded-lg border border-slate-200 hover:border-slate-300 bg-white transition flex items-center gap-1 shadow-xs" title="Open API Documentation">
+        <a href="https://harshit7271-faceguard-ai.hf.space/docs" target="_blank" rel="noopener noreferrer" class="text-xs font-semibold text-zinc-800 hover:text-zinc-950 px-2.5 sm:px-3 py-1.5 rounded-xl border border-zinc-200 hover:border-zinc-300 bg-white hover:bg-zinc-50 transition flex items-center gap-1 shadow-2xs min-h-[34px]" title="Open API Documentation">
           <span>Docs</span>
-          <svg class="w-3.5 h-3.5 hidden sm:inline" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <svg class="w-3.5 h-3.5 hidden sm:inline text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
         </a>
       </div>
     </header>
@@ -325,10 +325,10 @@ export function showToast(message, type = 'info') {
 
   const toast = document.createElement('div');
   const borderColors = {
-    info: 'border-indigo-200 bg-white text-indigo-800 shadow-lg',
-    success: 'border-emerald-200 bg-white text-emerald-800 shadow-lg',
-    warning: 'border-amber-200 bg-white text-amber-800 shadow-lg',
-    error: 'border-rose-200 bg-white text-rose-800 shadow-lg',
+    info: 'border-zinc-200 bg-white text-zinc-900 shadow-md',
+    success: 'border-emerald-200 bg-white text-emerald-800 shadow-md',
+    warning: 'border-amber-200 bg-white text-amber-800 shadow-md',
+    error: 'border-rose-200 bg-white text-rose-800 shadow-md',
   };
 
   toast.className = `pointer-events-auto px-4 py-3 rounded-xl border text-xs font-semibold flex items-center gap-2.5 transition-all duration-300 transform translate-y-3 opacity-0 ${borderColors[type] || borderColors.info}`;

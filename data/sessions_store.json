@@ -2721,6 +2721,220 @@
           "track_id": 4
         },
         "created_at": "2026-11-07T17:07:14.469779Z"
+      },
+      {
+        "event_id": "6328e6c0-a95a-473f-a37a-031c77ce9de2",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794247368790,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 141.13720042984104,
+          "brightness_score": 139.34221028645834,
+          "contrast_score": 59.49692884939917,
+          "issues": [
+            "Face confidence is degraded (0.41 < 0.45) - features partially obscured"
+          ]
+        },
+        "created_at": "2026-11-09T18:02:48.914204Z"
+      },
+      {
+        "event_id": "cbfc2663-d59b-4f85-97d7-da716b8249d5",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "IDENTITY_MISMATCH",
+        "timestamp_ms": 1794247371162,
+        "duration_ms": 1576,
+        "confidence": 0.5983948111534119,
+        "severity": "CRITICAL",
+        "evidence_metadata": {
+          "similarity_score": -0.10112237042918029,
+          "mismatch_duration_ms": 1576,
+          "track_id": 8
+        },
+        "created_at": "2026-11-09T18:02:51.279866Z"
+      },
+      {
+        "event_id": "bccf9772-26bc-42a7-9db8-b45ec4f52c79",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794247375973,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 159.51576924240558,
+          "brightness_score": 151.69398111979166,
+          "contrast_score": 55.708678471152474,
+          "issues": [
+            "Face confidence is degraded (0.38 < 0.45) - features partially obscured"
+          ]
+        },
+        "created_at": "2026-11-09T18:02:56.072477Z"
+      },
+      {
+        "event_id": "a4684dec-98bc-45fc-bc41-61731bc9a287",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794247384769,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 105.94402992801902,
+          "brightness_score": 155.4492599826389,
+          "contrast_score": 59.3639340683564,
+          "issues": [
+            "Face confidence is degraded (0.35 < 0.45) - features partially obscured"
+          ]
+        },
+        "created_at": "2026-11-09T18:03:04.852564Z"
+      },
+      {
+        "event_id": "cf4883c3-7909-4d92-9238-9f1f5662bd41",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "IDENTITY_MISMATCH",
+        "timestamp_ms": 1794247387166,
+        "duration_ms": 1604,
+        "confidence": 0.7486119270324707,
+        "severity": "CRITICAL",
+        "evidence_metadata": {
+          "similarity_score": 0.2254582941532135,
+          "mismatch_duration_ms": 1604,
+          "track_id": 8
+        },
+        "created_at": "2026-11-09T18:03:07.263199Z"
+      },
+      {
+        "event_id": "e92c78e0-55f4-471a-8d14-fa5b249a5a4b",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794247392761,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 118.48057615520219,
+          "brightness_score": 152.23337348090277,
+          "contrast_score": 58.505986065743805,
+          "issues": [
+            "Face confidence is degraded (0.40 < 0.45) - features partially obscured"
+          ]
+        },
+        "created_at": "2026-11-09T18:03:12.848297Z"
+      },
+      {
+        "event_id": "0ece3ee4-5ef0-4c95-b55a-ea0f39d0e9c5",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794249075322,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 3.4734526884808954,
+          "brightness_score": 7.01681640625,
+          "contrast_score": 9.248161145308398,
+          "issues": [
+            "Image is blurry (blur score 3.5 < 25.0)",
+            "Image is underexposed/dark (brightness 7.0 < 25.0)",
+            "Image has low contrast (contrast score 9.2 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T18:31:15.400768Z"
+      },
+      {
+        "event_id": "d3052a10-c81b-4317-a519-e2ebc5c8fa4a",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794249227727,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 1.2358311631520589,
+          "brightness_score": 5.293041449652778,
+          "contrast_score": 2.2055461417613045,
+          "issues": [
+            "Image is blurry (blur score 1.2 < 25.0)",
+            "Image is underexposed/dark (brightness 5.3 < 25.0)",
+            "Image has low contrast (contrast score 2.2 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T18:33:47.831033Z"
+      },
+      {
+        "event_id": "f3d9e3ae-4595-4e76-8b1d-91cde0293918",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794249383691,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 1.2448046871985918,
+          "brightness_score": 5.2283745659722225,
+          "contrast_score": 2.1251970918351963,
+          "issues": [
+            "Image is blurry (blur score 1.2 < 25.0)",
+            "Image is underexposed/dark (brightness 5.2 < 25.0)",
+            "Image has low contrast (contrast score 2.1 < 10.0)",
+            "Face confidence is degraded (0.42 < 0.45) - features partially obscured"
+          ]
+        },
+        "created_at": "2026-11-09T18:36:23.768884Z"
+      },
+      {
+        "event_id": "b75ae995-6498-480c-b845-e26f04010473",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794249435839,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 1.168375650616634,
+          "brightness_score": 5.211561414930555,
+          "contrast_score": 2.143106027022416,
+          "issues": [
+            "Image is blurry (blur score 1.2 < 25.0)",
+            "Image is underexposed/dark (brightness 5.2 < 25.0)",
+            "Image has low contrast (contrast score 2.1 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T18:37:15.929084Z"
+      },
+      {
+        "event_id": "3b442940-d57e-406a-8bd1-28456dd01c30",
+        "session_id": "1d3804b4-32e8-4b6c-84f6-280e4e242915",
+        "tenant_id": "alorica",
+        "event_type": "LOW_IMAGE_QUALITY",
+        "timestamp_ms": 1794249957102,
+        "duration_ms": 0,
+        "confidence": 1.0,
+        "severity": "LOW",
+        "evidence_metadata": {
+          "blur_score": 1.1617241750823126,
+          "brightness_score": 5.2516796875,
+          "contrast_score": 1.9300763356118305,
+          "issues": [
+            "Image is blurry (blur score 1.2 < 25.0)",
+            "Image is underexposed/dark (brightness 5.3 < 25.0)",
+            "Image has low contrast (contrast score 1.9 < 10.0)"
+          ]
+        },
+        "created_at": "2026-11-09T18:45:57.186109Z"
       }
     ]
   }

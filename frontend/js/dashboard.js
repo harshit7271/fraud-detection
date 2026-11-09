@@ -99,7 +99,7 @@ async function loadDashboardMetrics() {
     if (suspiciousSessionsEl) suspiciousSessionsEl.textContent = '0';
     if (fraudEventsEl) fraudEventsEl.textContent = '0';
     if (emptyStateEl) {
-      emptyStateEl.textContent = `Backend error loading sessions: ${err.message}`;
+      emptyStateEl.textContent = `Backend status: ${err.message}`;
       emptyStateEl.classList.remove('hidden');
     }
   }
@@ -134,7 +134,7 @@ function renderRecentSessionsPage(page) {
 
   pageSessions.forEach(s => {
     const row = document.createElement('tr');
-    row.className = 'border-b border-slate-100 hover:bg-slate-50 transition cursor-pointer text-xs';
+    row.className = 'border-b border-zinc-100 hover:bg-zinc-50 transition cursor-pointer text-xs';
     row.onclick = () => {
       window.location.href = `/session-details?session_id=${s.session_id}`;
     };
@@ -157,12 +157,12 @@ function renderRecentSessionsPage(page) {
 
     row.innerHTML = `
       <td class="py-3 px-4">
-        <div class="font-mono font-bold text-slate-900">${s.candidate_id}</div>
-        <div class="text-[10px] text-indigo-600 font-mono font-semibold" title="${s.session_id}">UUID: ${s.session_id.substring(0, 8)}...</div>
+        <div class="font-mono font-bold text-zinc-950">${s.candidate_id}</div>
+        <div class="text-[10px] text-zinc-500 font-mono font-semibold" title="${s.session_id}">UUID: ${s.session_id.substring(0, 8)}...</div>
       </td>
-      <td class="py-3 px-4 font-mono text-slate-700 font-medium">${s.interview_id}</td>
+      <td class="py-3 px-4 font-mono text-zinc-700 font-medium">${s.interview_id}</td>
       <td class="py-3 px-4">
-        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider ${s.status === 'INITIALIZED' ? 'bg-indigo-50 text-indigo-700 border border-indigo-200' : 'bg-slate-100 text-slate-700 border border-slate-200'}">
+        <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold uppercase tracking-wider bg-zinc-100 text-zinc-800 border border-zinc-200">
           ${s.status}
         </span>
       </td>
@@ -173,9 +173,9 @@ function renderRecentSessionsPage(page) {
           <span class="text-[10px] font-semibold opacity-75">(${level})</span>
         </span>
       </td>
-      <td class="py-3 px-4 font-mono text-slate-600">${createdDate}</td>
+      <td class="py-3 px-4 font-mono text-zinc-600">${createdDate}</td>
       <td class="py-3 px-4 text-right">
-        <a href="/session-details?session_id=${s.session_id}" class="text-indigo-600 hover:text-indigo-700 font-semibold text-xs flex items-center justify-end gap-1">
+        <a href="/session-details?session_id=${s.session_id}" class="text-zinc-900 hover:text-black font-semibold text-xs flex items-center justify-end gap-1">
           <span>Investigate</span>
           <span>→</span>
         </a>

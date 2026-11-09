@@ -5,7 +5,21 @@
 export const Config = {
   // Base URL for the FastAPI Backend API
   getApiBaseUrl() {
-    return localStorage.getItem('faceguard_api_base_url') || `${window.location.origin}/api/v1`;
+    const stored = localStorage.getItem('faceguard_api_base_url');
+    if (stored) {
+      try {
+        const parsed = new URL(stored);
+        // If current window is localhost/127.0.0.1, and stored points to remote HF space, prefer local
+        if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') &&
+            parsed.hostname !== 'localhost' && parsed.hostname !== '127.0.0.1') {
+          return `${window.location.origin}/api/v1`;
+        }
+        return stored.replace(/\/+$/, '');
+      } catch (e) {
+        return `${window.location.origin}/api/v1`;
+      }
+    }
+    return `${window.location.origin}/api/v1`;
   },
   setApiBaseUrl(url) {
     if (url) localStorage.setItem('faceguard_api_base_url', url.trim());
@@ -14,20 +28,34 @@ export const Config = {
 
   // Active Tenant Authentication Key
   getTenantKey() {
-    return localStorage.getItem('faceguard_tenant_key') || 'alorica-live-key-2026';
+    const key = localStorage.getItem('faceguard_tenant_key');
+    if (!key || key === 'alorica-test' || key === 'default' || key.trim() === '') {
+      return 'alorica-live-key-2026';
+    }
+    return key.trim();
   },
   setTenantKey(key) {
     if (key) localStorage.setItem('faceguard_tenant_key', key.trim());
     else localStorage.removeItem('faceguard_tenant_key');
   },
 
-  // Active Tenant ID
+  // Active Tenant ID / Slug
   getTenantId() {
-    return localStorage.getItem('faceguard_tenant_id') || 'alorica-test';
+    const id = localStorage.getItem('faceguard_tenant_id');
+    if (!id || id === 'alorica-test') return 'alorica';
+    if (id === 'sagility-test') return 'sagility';
+    if (id === 'mastek-test') return 'mastek';
+    return id.trim();
   },
   setTenantId(id) {
-    if (id) localStorage.setItem('faceguard_tenant_id', id.trim());
-    else localStorage.removeItem('faceguard_tenant_id');
+    if (id) {
+      const sanitized = id === 'alorica-test' ? 'alorica' :
+                        id === 'sagility-test' ? 'sagility' :
+                        id === 'mastek-test' ? 'mastek' : id.trim();
+      localStorage.setItem('faceguard_tenant_id', sanitized);
+    } else {
+      localStorage.removeItem('faceguard_tenant_id');
+    }
   },
 
   // Frame Sampling Cadence (ms)
@@ -59,8 +87,8 @@ export const Config = {
 
   // Pre-configured Enterprise Tenants
   AVAILABLE_TENANTS: [
-    { id: 'alorica-test', name: 'Alorica Global', key: 'alorica-live-key-2026' },
-    { id: 'sagility-test', name: 'Sagility Health', key: 'sagility-live-key-2026' },
-    { id: 'mastek-test', name: 'Mastek Enterprise', key: 'mastek-live-key-2026' },
+    { id: 'alorica', name: 'Alorica Global', key: 'alorica-live-key-2026' },
+    { id: 'sagility', name: 'Sagility Health', key: 'sagility-live-key-2026' },
+    { id: 'mastek', name: 'Mastek Enterprise', key: 'mastek-live-key-2026' },
   ]
 };

@@ -1,20 +1,16 @@
-/* FACEGUARD AI Enterprise Light Stylesheet */
+/* FACEGUARD AI Senior Enterprise Grayish + White Stylesheet */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
 
 :root {
-  --bg-primary: #f8fafc;
-  --bg-surface: #ffffff;
-  --bg-elevated: #f1f5f9;
-  --border-subtle: #e2e8f0;
-  --border-strong: #cbd5e1;
-  --text-primary: #0f172a;
-  --text-secondary: #475569;
-  --color-brand: #4f46e5;
-  --color-brand-hover: #4338ca;
-  --color-cyan: #0284c7;
-  --color-emerald: #059669;
-  --color-amber: #d97706;
-  --color-rose: #e11d48;
+  --bg-primary: #eaedf0;       /* High-contrast cool studio gray canvas */
+  --bg-surface: #ffffff;       /* Pure crisp white for cards */
+  --bg-elevated: #f1f3f6;      /* Soft light gray insets & controls */
+  --border-subtle: #dbe0e6;    /* Crisp defined hairline borders */
+  --border-strong: #cbd2d9;    /* Zinc-300 borders */
+  --text-primary: #09090b;     /* Deep graphite zinc-950 */
+  --text-secondary: #64748b;   /* Clean slate-500 secondary text */
+  --color-brand: #18181b;      /* High-end charcoal brand accent */
+  --color-brand-hover: #27272a;
 }
 
 html {
@@ -38,18 +34,18 @@ code, pre, .font-mono {
   font-family: 'JetBrains Mono', monospace;
 }
 
-/* Custom Clean Scrollbar */
+/* Custom Minimalist Clean Scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f5f9;
+  background: #eaedf0;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
+  background: #cbd2d9;
   border-radius: 9999px;
 }
 
@@ -57,24 +53,23 @@ code, pre, .font-mono {
   background: #94a3b8;
 }
 
-/* Crisp Clean Surface Utilities */
+/* Crisp Studio Surface Utilities */
 .glass-panel {
-  background-color: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid #e2e8f0;
+  background-color: #ffffff;
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
 }
 
 .glass-card {
   background-color: #ffffff;
-  border: 1px solid #e2e8f0;
-  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.03);
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-card:hover {
-  border-color: #cbd5e1;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  border-color: var(--border-strong);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.03);
 }
 
 /* Camera & HUD Overlay */
@@ -93,23 +88,23 @@ code, pre, .font-mono {
   left: 0;
   right: 0;
   height: 2px;
-  background: linear-gradient(90deg, transparent 0%, rgba(2, 132, 199, 0.9) 50%, transparent 100%);
-  box-shadow: 0 0 12px 2px rgba(2, 132, 199, 0.5);
-  animation: scan 3s ease-in-out infinite alternate;
+  background: linear-gradient(90deg, transparent 0%, rgba(24, 24, 27, 0.8) 50%, transparent 100%);
+  box-shadow: 0 0 10px 1px rgba(24, 24, 27, 0.25);
+  animation: scan 3.5s ease-in-out infinite alternate;
   pointer-events: none;
 }
 
 @keyframes scan {
-  0% { top: 4%; opacity: 0.3; }
-  50% { opacity: 0.9; }
-  100% { top: 96%; opacity: 0.3; }
+  0% { top: 4%; opacity: 0.2; }
+  50% { opacity: 0.8; }
+  100% { top: 96%; opacity: 0.2; }
 }
 
 /* Status Badges */
 .badge-verified {
-  background-color: #ecfdf5;
-  color: #065f46;
-  border: 1px solid #a7f3d0;
+  background-color: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
 }
 
 .badge-warning {
@@ -125,9 +120,9 @@ code, pre, .font-mono {
 }
 
 .badge-neutral {
-  background-color: #f1f5f9;
+  background-color: #f1f3f6;
   color: #475569;
-  border: 1px solid #e2e8f0;
+  border: 1px solid #dbe0e6;
 }
 
 /* Mobile & Touch Responsiveness (iOS Safari & Android Chrome) */

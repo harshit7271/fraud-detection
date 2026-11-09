@@ -72,17 +72,17 @@ async function initMonitoring() {
       if (camera.stream) {
         camera.stop();
         toggleCamBtn.innerHTML = `<span>📹</span><span>Start Camera</span>`;
-        toggleCamBtn.className = 'bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold py-2 px-3.5 rounded-xl transition';
+        toggleCamBtn.className = 'bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-2 px-3.5 rounded-xl transition shadow-xs';
         document.getElementById('cameraStatusText').textContent = 'STOPPED';
-        document.getElementById('cameraStatusPill').className = 'w-2 h-2 rounded-full bg-slate-500';
+        document.getElementById('cameraStatusPill').className = 'w-2 h-2 rounded-full bg-zinc-400';
         pauseProctoring();
       } else {
         try {
           await camera.start(videoEl, Config.getSelectedCameraId());
           toggleCamBtn.innerHTML = `<span>⏹</span><span>Stop Camera</span>`;
-          toggleCamBtn.className = 'bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold py-2 px-3.5 rounded-xl border border-slate-700 transition';
+          toggleCamBtn.className = 'bg-white hover:bg-zinc-50 text-zinc-700 text-xs font-semibold py-2 px-3.5 rounded-xl border border-zinc-200 transition shadow-2xs';
           document.getElementById('cameraStatusText').textContent = 'ACTIVE';
-          document.getElementById('cameraStatusPill').className = 'w-2 h-2 rounded-full bg-emerald-400 animate-pulse';
+          document.getElementById('cameraStatusPill').className = 'w-2 h-2 rounded-full bg-emerald-500 animate-pulse';
         } catch (err) {
           showToast(err.message, 'error');
         }
@@ -205,7 +205,7 @@ function updateSessionHeaderDisplay() {
   if (candSpan) candSpan.textContent = activeCandidateId;
   if (statusSpan) {
     statusSpan.textContent = isMonitoring ? 'PROCTORING ACTIVE' : 'READY TO PROCTOR';
-    statusSpan.className = isMonitoring ? 'text-xs text-emerald-400 font-mono font-bold' : 'text-xs text-indigo-400 font-mono';
+    statusSpan.className = isMonitoring ? 'text-xs text-emerald-600 font-mono font-bold' : 'text-xs text-zinc-500 font-mono font-semibold';
   }
 }
 
@@ -250,7 +250,7 @@ function pauseProctoring() {
   const toggleBtn = document.getElementById('toggleProctorBtn');
   if (toggleBtn) {
     toggleBtn.innerHTML = `<span>▶</span><span>Resume Proctoring</span>`;
-    toggleBtn.className = 'bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-semibold py-2 px-3.5 rounded-xl transition';
+    toggleBtn.className = 'bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-2 px-3.5 rounded-xl transition shadow-xs';
   }
   updateSessionHeaderDisplay();
 }
@@ -445,11 +445,11 @@ function updateDiagnosticsAndCounters(data, latencyMs) {
       livenessEl.className = 'font-mono text-xs font-semibold text-amber-600';
     } else {
       livenessEl.textContent = 'NOT_EVALUATED';
-      livenessEl.className = 'font-mono text-xs font-semibold text-slate-400';
+      livenessEl.className = 'font-mono text-xs font-semibold text-zinc-500';
     }
   } else {
     livenessEl.textContent = 'NOT_EVALUATED';
-    livenessEl.className = 'font-mono text-xs font-semibold text-slate-400';
+    livenessEl.className = 'font-mono text-xs font-semibold text-zinc-500';
   }
 
   // Processing & Latency
@@ -544,7 +544,7 @@ function appendEventToTimeline(ev) {
     CRITICAL: 'border-rose-200 bg-rose-50 text-rose-900',
     HIGH: 'border-rose-200 bg-rose-50 text-rose-900',
     MEDIUM: 'border-amber-200 bg-amber-50 text-amber-900',
-    LOW: 'border-slate-200 bg-slate-50 text-slate-800',
+    LOW: 'border-zinc-200 bg-zinc-50 text-zinc-800',
   };
 
   item.className = `flex items-center justify-between p-3 rounded-xl border text-xs font-mono transition-all ${severityColors[ev.severity] || severityColors.MEDIUM}`;
@@ -552,13 +552,13 @@ function appendEventToTimeline(ev) {
     <div class="flex items-center gap-3">
       <span class="w-2.5 h-2.5 rounded-full ${ev.severity === 'CRITICAL' || ev.severity === 'HIGH' ? 'bg-rose-500' : 'bg-amber-400'}"></span>
       <div>
-        <span class="font-bold text-slate-900">${ev.event_type}</span>
-        <span class="text-[10px] text-slate-500 ml-2">Conf: ${(ev.confidence * 100).toFixed(0)}%</span>
+        <span class="font-bold text-zinc-950">${ev.event_type}</span>
+        <span class="text-[10px] text-zinc-500 ml-2">Conf: ${(ev.confidence * 100).toFixed(0)}%</span>
       </div>
     </div>
     <div class="flex items-center gap-4 text-right">
-      <span class="text-slate-600 text-[11px] font-medium">${(ev.duration_ms / 1000).toFixed(1)}s duration</span>
-      <span class="text-slate-500 text-[10px]">${new Date(ev.timestamp_ms).toLocaleTimeString()}</span>
+      <span class="text-zinc-600 text-[11px] font-medium">${(ev.duration_ms / 1000).toFixed(1)}s duration</span>
+      <span class="text-zinc-500 text-[10px]">${new Date(ev.timestamp_ms).toLocaleTimeString()}</span>
     </div>
   `;
 

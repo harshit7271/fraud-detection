@@ -13,31 +13,29 @@
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Inter', 'sans-serif'],
+                        sans: ['Inter', system-ui, 'sans-serif'],
                         mono: ['JetBrains Mono', 'monospace'],
                     },
                     colors: {
-                        brand: {
-                            50: '#eef2ff',
-                            500: '#6366f1',
-                            600: '#4f46e5',
-                            700: '#4338ca',
+                        zinc: {
+                            850: '#1f1f23',
+                            950: '#09090b',
                         }
                     }
                 }
             }
         }
     </script>
-    <!-- Custom Enterprise Stylesheet -->
+    <!-- Custom Enterprise Grayish + White Stylesheet -->
     <link rel="stylesheet" href="/static/css/styles.css">
 </head>
-<body class="bg-slate-50 text-slate-800 min-h-screen">
+<body class="bg-[#eaedf0] text-zinc-900 min-h-screen selection:bg-zinc-200">
 
     <!-- Persistent Sidebar Container -->
     <div id="sidebarContainer"></div>
 
     <!-- Main Application Wrapper (Responsive margin for sidebar) -->
-    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 w-full overflow-x-hidden min-w-0">
+    <div class="lg:ml-64 flex flex-col min-h-screen transition-all duration-300 min-w-0">
         
         <!-- Header Bar Container -->
         <div id="headerContainer"></div>
@@ -46,21 +44,21 @@
         <main class="flex-1 p-3.5 sm:p-6 lg:p-8 space-y-6 lg:space-y-8 max-w-7xl w-full min-w-0">
             
             <!-- Welcome Banner & Quick Action Launchers -->
-            <div class="flex flex-wrap items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
+            <div class="flex flex-wrap items-center justify-between gap-4 p-6 rounded-2xl bg-white border border-zinc-200 shadow-xs">
                 <div class="space-y-1">
                     <div class="flex items-center gap-2">
-                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider bg-indigo-50 text-indigo-700 border border-indigo-200 uppercase">ENTERPRISE PROCTORING ACTIVE</span>
-                        <span class="text-xs text-slate-400 font-mono">v1.0.0</span>
+                        <span class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold tracking-wider bg-zinc-100 text-zinc-800 border border-zinc-200 uppercase">ENTERPRISE PROCTORING ACTIVE</span>
+                        <span class="text-xs text-zinc-400 font-mono">v1.0.0</span>
                     </div>
-                    <h2 class="text-xl font-extrabold text-slate-900 tracking-tight">AI Forensic Surveillance & Biometric Authentication</h2>
-                    <p class="text-xs text-slate-500">Autonomous face tracking, multi-face alerts, SFace cosine verification, and continuous risk scoring.</p>
+                    <h2 class="text-xl font-extrabold text-zinc-950 tracking-tight">AI Forensic Surveillance & Biometric Authentication</h2>
+                    <p class="text-xs text-zinc-500">Autonomous face tracking, multi-face alerts, SFace cosine verification, and continuous risk scoring.</p>
                 </div>
                 <div class="flex flex-wrap items-center gap-2.5 w-full sm:w-auto">
-                    <a href="/register" class="flex-1 sm:flex-initial bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition shadow-sm flex items-center justify-center gap-2 min-h-[42px]">
+                    <a href="/register" class="flex-1 sm:flex-initial bg-zinc-900 hover:bg-zinc-800 active:scale-95 text-white text-xs font-semibold py-2.5 px-4 rounded-xl transition shadow-xs flex items-center justify-center gap-2 min-h-[42px]">
                         <span>📷</span>
                         <span>Register Candidate (Snap Baseline Selfie)</span>
                     </a>
-                    <a href="/monitor" class="flex-1 sm:flex-initial bg-white hover:bg-slate-50 active:scale-95 text-slate-700 text-xs font-semibold py-2.5 px-4 rounded-xl border border-slate-200 transition shadow-xs flex items-center justify-center gap-2 min-h-[42px]">
+                    <a href="/monitor" class="flex-1 sm:flex-initial bg-white hover:bg-zinc-50 active:scale-95 text-zinc-700 text-xs font-semibold py-2.5 px-4 rounded-xl border border-zinc-200 transition shadow-2xs flex items-center justify-center gap-2 min-h-[42px]">
                         <span>📹</span>
                         <span>Launch Live Proctor</span>
                     </a>
@@ -73,14 +71,14 @@
                 <!-- Metric 1: Total Sessions -->
                 <div class="glass-card p-5 rounded-2xl space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">Total Sessions</span>
-                        <span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center text-sm font-bold border border-indigo-100">👥</span>
+                        <span class="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">Total Sessions</span>
+                        <span class="w-8 h-8 rounded-xl bg-zinc-100 text-zinc-700 flex items-center justify-center text-sm font-bold border border-zinc-200">👥</span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span id="statTotalSessions" class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">—</span>
-                        <span class="text-[11px] text-slate-400 font-medium">Registered</span>
+                        <span id="statTotalSessions" class="text-3xl font-extrabold text-zinc-950 font-mono tracking-tight">—</span>
+                        <span class="text-[11px] text-zinc-400 font-medium">Registered</span>
                     </div>
-                    <div class="text-[11px] text-slate-500 flex items-center gap-1.5 pt-2 border-t border-slate-100">
+                    <div class="text-[11px] text-zinc-500 flex items-center gap-1.5 pt-2 border-t border-zinc-100">
                         <span class="text-emerald-500 font-bold">●</span>
                         <span>Active tenant sessions</span>
                     </div>
@@ -89,15 +87,15 @@
                 <!-- Metric 2: Sessions Analyzed -->
                 <div class="glass-card p-5 rounded-2xl space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">Sessions Analyzed</span>
-                        <span class="w-8 h-8 rounded-xl bg-sky-50 text-sky-600 flex items-center justify-center text-sm font-bold border border-sky-100">⚡</span>
+                        <span class="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">Sessions Analyzed</span>
+                        <span class="w-8 h-8 rounded-xl bg-zinc-100 text-zinc-700 flex items-center justify-center text-sm font-bold border border-zinc-200">⚡</span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span id="statAnalyzedSessions" class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">—</span>
-                        <span class="text-[11px] text-slate-400 font-medium">Completed</span>
+                        <span id="statAnalyzedSessions" class="text-3xl font-extrabold text-zinc-950 font-mono tracking-tight">—</span>
+                        <span class="text-[11px] text-zinc-400 font-medium">Completed</span>
                     </div>
-                    <div class="text-[11px] text-slate-500 flex items-center gap-1.5 pt-2 border-t border-slate-100">
-                        <span class="text-sky-500 font-bold">●</span>
+                    <div class="text-[11px] text-zinc-500 flex items-center gap-1.5 pt-2 border-t border-zinc-100">
+                        <span class="text-emerald-500 font-bold">●</span>
                         <span>Processed with YuNet + SFace</span>
                     </div>
                 </div>
@@ -105,14 +103,14 @@
                 <!-- Metric 3: Suspicious Sessions -->
                 <div class="glass-card p-5 rounded-2xl space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">Suspicious Sessions</span>
-                        <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-sm font-bold border border-amber-100">⚠️</span>
+                        <span class="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">Suspicious Sessions</span>
+                        <span class="w-8 h-8 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center text-sm font-bold border border-amber-200">⚠️</span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span id="statSuspiciousSessions" class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">—</span>
-                        <span class="text-[11px] text-slate-400 font-medium">Risk &ge; 25.0</span>
+                        <span id="statSuspiciousSessions" class="text-3xl font-extrabold text-zinc-950 font-mono tracking-tight">—</span>
+                        <span class="text-[11px] text-zinc-400 font-medium">Risk &ge; 25.0</span>
                     </div>
-                    <div class="text-[11px] text-slate-500 flex items-center gap-1.5 pt-2 border-t border-slate-100">
+                    <div class="text-[11px] text-zinc-500 flex items-center gap-1.5 pt-2 border-t border-zinc-100">
                         <span class="text-amber-500 font-bold">●</span>
                         <span>Flagged for auditor review</span>
                     </div>
@@ -121,14 +119,14 @@
                 <!-- Metric 4: Total Fraud Events -->
                 <div class="glass-card p-5 rounded-2xl space-y-3">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-500 uppercase tracking-wider font-mono">Fraud Events Detected</span>
-                        <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-sm font-bold border border-rose-100">🚨</span>
+                        <span class="text-xs font-semibold text-zinc-500 uppercase tracking-wider font-mono">Fraud Events Detected</span>
+                        <span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-700 flex items-center justify-center text-sm font-bold border border-rose-200">🚨</span>
                     </div>
                     <div class="flex items-baseline gap-2">
-                        <span id="statFraudEvents" class="text-3xl font-extrabold text-slate-900 font-mono tracking-tight">—</span>
-                        <span class="text-[11px] text-slate-400 font-medium">Confirmed</span>
+                        <span id="statFraudEvents" class="text-3xl font-extrabold text-zinc-950 font-mono tracking-tight">—</span>
+                        <span class="text-[11px] text-zinc-400 font-medium">Confirmed</span>
                     </div>
-                    <div class="text-[11px] text-slate-500 flex items-center gap-1.5 pt-2 border-t border-slate-100">
+                    <div class="text-[11px] text-zinc-500 flex items-center gap-1.5 pt-2 border-t border-zinc-100">
                         <span class="text-rose-500 font-bold">●</span>
                         <span>Multi-face, Mismatch & Absences</span>
                     </div>
@@ -141,15 +139,15 @@
                 
                 <!-- Recent Sessions Table Card -->
                 <div class="lg:col-span-8 glass-card rounded-2xl p-6 space-y-4">
-                    <div class="flex items-center justify-between border-b border-slate-100 pb-3.5">
+                    <div class="flex items-center justify-between border-b border-zinc-100 pb-3.5">
                         <div>
-                            <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
+                            <h3 class="text-sm font-bold text-zinc-950 flex items-center gap-2">
                                 <span>📋</span>
                                 <span>Recent Proctoring Sessions</span>
                             </h3>
-                            <p class="text-xs text-slate-500">Live records registered under active tenant boundary</p>
+                            <p class="text-xs text-zinc-500">Live records registered under active tenant boundary</p>
                         </div>
-                        <a href="/history" class="text-xs text-indigo-600 hover:text-indigo-700 font-semibold flex items-center gap-1">
+                        <a href="/history" class="text-xs text-zinc-900 hover:text-zinc-600 font-semibold flex items-center gap-1 transition">
                             <span>View All Records</span>
                             <span>→</span>
                         </a>
@@ -158,7 +156,7 @@
                     <div class="overflow-x-auto touch-scroll">
                         <table class="w-full text-left">
                             <thead>
-                                <tr class="text-[11px] font-mono uppercase tracking-wider text-slate-500 bg-slate-50 border-b border-slate-200">
+                                <tr class="text-[11px] font-mono uppercase tracking-wider text-zinc-500 bg-zinc-50 border-b border-zinc-200">
                                     <th class="py-2.5 px-4 font-semibold">Candidate ID</th>
                                     <th class="py-2.5 px-4 font-semibold">Interview ID</th>
                                     <th class="py-2.5 px-4 font-semibold">Status</th>
@@ -173,23 +171,23 @@
                         </table>
                         
                         <!-- Honest Empty State -->
-                        <div id="recentSessionsEmpty" class="py-12 text-center text-xs text-slate-400 space-y-2">
+                        <div id="recentSessionsEmpty" class="py-12 text-center text-xs text-zinc-400 space-y-2">
                             <p class="text-2xl">🔍</p>
-                            <p class="font-medium text-slate-600">No interview sessions recorded yet for this tenant.</p>
-                            <p class="text-slate-400">Register a candidate with a baseline selfie to begin monitoring.</p>
+                            <p class="font-medium text-zinc-600">No interview sessions recorded yet for this tenant.</p>
+                            <p class="text-zinc-400">Register a candidate with a baseline selfie to begin monitoring.</p>
                         </div>
                     </div>
 
                     <!-- 10-Item Pagination Controls -->
-                    <div id="recentSessionsPagination" class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100 text-xs font-mono text-slate-500 hidden">
+                    <div id="recentSessionsPagination" class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-zinc-100 text-xs font-mono text-zinc-500 hidden">
                         <div id="recentSessionsPageInfo">Showing 1 to 10 of 10 sessions</div>
                         <div class="flex items-center gap-1.5">
-                            <button id="recentSessionsPrevBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-xs flex items-center gap-1 cursor-pointer">
+                            <button id="recentSessionsPrevBtn" type="button" class="px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-2xs flex items-center gap-1 cursor-pointer">
                                 <span>←</span>
                                 <span>Previous</span>
                             </button>
-                            <span id="recentSessionsPageNumber" class="px-2.5 py-1 text-slate-700 font-bold">Page 1 of 1</span>
-                            <button id="recentSessionsNextBtn" type="button" class="px-3 py-1.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-xs flex items-center gap-1 cursor-pointer">
+                            <span id="recentSessionsPageNumber" class="px-2.5 py-1 text-zinc-700 font-bold">Page 1 of 1</span>
+                            <button id="recentSessionsNextBtn" type="button" class="px-3 py-1.5 rounded-lg border border-zinc-200 bg-white hover:bg-zinc-50 text-zinc-700 font-semibold disabled:opacity-40 disabled:cursor-not-allowed transition shadow-2xs flex items-center gap-1 cursor-pointer">
                                 <span>Next</span>
                                 <span>→</span>
                             </button>
@@ -202,29 +200,29 @@
                     
                     <!-- AI Microservice Stack Card -->
                     <div class="glass-card rounded-2xl p-5 space-y-3.5">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-2.5">
-                            <span class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono">Microservice Architecture</span>
+                        <div class="flex items-center justify-between border-b border-zinc-100 pb-2.5">
+                            <span class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono">Microservice Architecture</span>
                             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
                         </div>
                         <div class="space-y-2.5 text-xs font-mono">
-                            <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50 border border-slate-200">
-                                <span class="text-slate-500">Face Detector:</span>
-                                <span class="text-emerald-700 font-semibold">OpenCV YuNet (ONNX)</span>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                                <span class="text-zinc-500">Face Detector:</span>
+                                <span class="text-zinc-900 font-semibold">OpenCV YuNet (ONNX)</span>
                             </div>
-                            <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50 border border-slate-200">
-                                <span class="text-slate-500">Feature Extractor:</span>
-                                <span class="text-emerald-700 font-semibold">SFace 128-d Normed</span>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                                <span class="text-zinc-500">Feature Extractor:</span>
+                                <span class="text-zinc-900 font-semibold">SFace 128-d Normed</span>
                             </div>
-                            <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50 border border-slate-200">
-                                <span class="text-slate-500">Temporal Engine:</span>
-                                <span class="text-indigo-700 font-semibold">IoU Multi-Frame Tracker</span>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                                <span class="text-zinc-500">Temporal Engine:</span>
+                                <span class="text-zinc-900 font-semibold">IoU Multi-Frame Tracker</span>
                             </div>
-                            <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50 border border-slate-200">
-                                <span class="text-slate-500">Biometric Cipher:</span>
-                                <span class="text-sky-700 font-semibold">AES-256-GCM (HMAC-SHA256)</span>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                                <span class="text-zinc-500">Biometric Cipher:</span>
+                                <span class="text-zinc-900 font-semibold">AES-256-GCM (HMAC-SHA256)</span>
                             </div>
-                            <div class="flex justify-between items-center p-2 rounded-lg bg-slate-50 border border-slate-200">
-                                <span class="text-slate-500">Backend API:</span>
+                            <div class="flex justify-between items-center p-2 rounded-lg bg-zinc-50 border border-zinc-200">
+                                <span class="text-zinc-500">Backend API:</span>
                                 <span class="text-emerald-700 font-semibold">FastAPI Async (Port 8000)</span>
                             </div>
                         </div>
@@ -232,18 +230,18 @@
 
                     <!-- Detection Coverage Overview -->
                     <div class="glass-card rounded-2xl p-5 space-y-3">
-                        <h4 class="text-xs font-bold text-slate-900 uppercase tracking-wider font-mono border-b border-slate-100 pb-2.5">Real-Time Fraud Rules</h4>
+                        <h4 class="text-xs font-bold text-zinc-950 uppercase tracking-wider font-mono border-b border-zinc-100 pb-2.5">Real-Time Fraud Rules</h4>
                         <div class="grid grid-cols-2 gap-2 text-[11px] font-mono">
-                            <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">
+                            <div class="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-700">
                                 <span class="text-rose-600 font-bold">●</span> Multi-Face (>1)
                             </div>
-                            <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">
+                            <div class="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-700">
                                 <span class="text-rose-600 font-bold">●</span> Identity Mismatch
                             </div>
-                            <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">
+                            <div class="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-700">
                                 <span class="text-amber-600 font-bold">●</span> Face Absent (>3s)
                             </div>
-                            <div class="p-2 rounded-lg bg-slate-50 border border-slate-200 text-slate-700">
+                            <div class="p-2 rounded-lg bg-zinc-50 border border-zinc-200 text-zinc-700">
                                 <span class="text-amber-600 font-bold">●</span> Hand Occlusion
                             </div>
                         </div>

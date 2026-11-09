@@ -188,9 +188,9 @@ function renderConfirmedEventsPage(page) {
 
   pageEvents.forEach((ev, idx) => {
     const row = document.createElement('tr');
-    row.className = 'border-b border-slate-100 text-xs font-mono hover:bg-slate-50 transition';
+    row.className = 'border-b border-zinc-100 text-xs font-mono hover:bg-zinc-50 transition';
 
-    let severityBadge = 'bg-slate-100 text-slate-700 border-slate-200';
+    let severityBadge = 'bg-zinc-100 text-zinc-700 border-zinc-200';
     if (ev.severity === 'CRITICAL' || ev.severity === 'HIGH') {
       severityBadge = 'bg-rose-50 text-rose-700 border-rose-200 font-bold';
     } else if (ev.severity === 'MEDIUM') {
@@ -203,9 +203,9 @@ function renderConfirmedEventsPage(page) {
     const durationSec = (ev.duration_ms / 1000).toFixed(1);
 
     row.innerHTML = `
-      <td class="py-3 px-4 text-slate-500">#${startIdx + idx + 1}</td>
-      <td class="py-3 px-4 font-bold text-slate-900">
-        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-slate-100 border border-slate-200 text-slate-900 font-bold">
+      <td class="py-3 px-4 text-zinc-500">#${startIdx + idx + 1}</td>
+      <td class="py-3 px-4 font-bold text-zinc-950">
+        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-zinc-100 border border-zinc-200 text-zinc-900 font-bold">
           ${ev.event_type}
         </span>
       </td>
@@ -214,10 +214,10 @@ function renderConfirmedEventsPage(page) {
           ${ev.severity}
         </span>
       </td>
-      <td class="py-3 px-4 text-indigo-700 font-bold">${(ev.confidence * 100).toFixed(0)}%</td>
-      <td class="py-3 px-4 text-slate-700 font-medium">${durationSec}s</td>
-      <td class="py-3 px-4 text-slate-600">${timeStr}</td>
-      <td class="py-3 px-4 text-slate-500 font-mono text-[10px] truncate max-w-[200px]" title='${JSON.stringify(ev.evidence_metadata)}'>
+      <td class="py-3 px-4 text-zinc-900 font-bold">${(ev.confidence * 100).toFixed(0)}%</td>
+      <td class="py-3 px-4 text-zinc-700 font-medium">${durationSec}s</td>
+      <td class="py-3 px-4 text-zinc-600">${timeStr}</td>
+      <td class="py-3 px-4 text-zinc-500 font-mono text-[10px] truncate max-w-[200px]" title='${JSON.stringify(ev.evidence_metadata)}'>
         ${JSON.stringify(ev.evidence_metadata)}
       </td>
     `;
@@ -273,9 +273,9 @@ function showEmptyInvestigationNotice() {
     workArea.innerHTML = `
       <div class="glass-card p-12 text-center rounded-2xl max-w-lg mx-auto space-y-4">
         <span class="text-4xl">📂</span>
-        <h3 class="text-base font-bold text-slate-900">No Session Selected</h3>
-        <p class="text-xs text-slate-500">Please choose a candidate session from the Session History to view the complete forensic breakdown.</p>
-        <a href="/history" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition">
+        <h3 class="text-base font-bold text-zinc-950">No Session Selected</h3>
+        <p class="text-xs text-zinc-500">Please choose a candidate session from the Session History to view the complete forensic breakdown.</p>
+        <a href="/history" class="inline-block bg-zinc-900 hover:bg-zinc-800 text-white text-xs font-semibold py-2.5 px-5 rounded-xl transition shadow-xs">
           View Session History
         </a>
       </div>
