@@ -186,3 +186,38 @@ def test_poor_quality_suppresses_identity_penalty(poor_quality: ImageQualityAsse
         identity_similarity_score=0.10,
     )
     assert not any(e.event_type == FraudEventType.IDENTITY_MISMATCH for e in events_next)
+
+
+@pytest.mark.unit
+def test_poor_quality_empty_frame_evaluates_absence(poor_quality: ImageQualityAssessment) -> None:
+    engine = TemporalEventEngine(
+        session_id="sess_123",
+        tenant_id="tenant_abc",
+        face_absent_debounce_ms=3000,
+    )
+
+    # Frame 1: 0 faces at t=1000 with poor quality (e.g. empty dark wall)
+    events1 = engine.process_observation(1000, [], poor_quality)
+    assert any(e.event_type == FraudEventType.LOW_IMAGE_QUALITY for e in events1)
+
+    # Frame 2: 0 faces at t=4500 (duration 3500ms >= 3000ms)
+    events2 = engine.process_observation(4500, [], poor_quality)
+    assert any(e.event_type == FraudEventType.FACE_ABSENT for e in events2)
+
+
+@pytest.mark.unit
+def test_poor_quality_multi_face_evaluates_multiple_faces(poor_quality: ImageQualityAssessment) -> None:
+    engine = TemporalEventEngine(
+        session_id="sess_123",
+        tenant_id="tenant_abc",
+        multiple_faces_debounce_ms=2000,
+    )
+
+    faces = [make_tracked_face(1), make_tracked_face(2)]
+
+    # Frame 1: 2 faces at t=1000
+    engine.process_observation(1000, faces, poor_quality)
+
+    # Frame 2: 2 faces at t=3500 (duration 2500ms >= 2000ms)
+    events = engine.process_observation(3500, faces, poor_quality)
+    assert any(e.event_type == FraudEventType.MULTIPLE_FACES for e in events)

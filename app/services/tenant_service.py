@@ -62,10 +62,10 @@ _PREDEFINED_TENANTS: dict[str, TenantProfile] = {
         multiple_faces_debounce_ms=2000,
         face_absence_debounce_ms=3000,
         event_weights=EventWeights(
-            face_absent=20.0,
+            face_absent=30.0,
             multiple_faces=35.0,
-            identity_mismatch=45.0,
-            suspicious_liveness=30.0,
+            identity_mismatch=50.0,
+            suspicious_liveness=35.0,
         ),
     ),
     "enterprise-b": TenantProfile(

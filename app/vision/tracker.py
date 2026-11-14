@@ -62,7 +62,7 @@ class FaceTracker:
         self,
         iou_threshold: float = 0.35,
         max_missed_frames: int = 5,
-        max_time_gap_ms: int = 3000,
+        max_time_gap_ms: int = 10000,
     ) -> None:
         self.iou_threshold = iou_threshold
         self.max_missed_frames = max_missed_frames

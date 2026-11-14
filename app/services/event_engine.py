@@ -83,7 +83,8 @@ class TemporalEventEngine:
             # Section 5.D: Poor image quality must not become an identity fraud event
             # Suppress identity mismatch accumulation during poor quality frames
             self._mismatch_start_ms = None
-            return confirmed_events
+            if face_count == 1:
+                return confirmed_events
 
         # 2. Evaluate Face Absence / Zero Faces
         if face_count == 0:
